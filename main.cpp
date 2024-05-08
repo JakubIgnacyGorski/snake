@@ -1,6 +1,11 @@
 #include <iostream>
+#include <list> //Reprezentowanie pozycji węża jako lista
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+
+
+
+
+
     return 0;
 }

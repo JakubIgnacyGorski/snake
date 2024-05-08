@@ -3,4 +3,6 @@ project(Snake)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Snake main.cpp)
+add_executable(Snake main.cpp
+        snakeBody.cpp
+        snakeBody.h)
