@@ -4,6 +4,8 @@
 
 #include "snakeBody.h"
 #include <iostream>
+#include <random>
+
 
 snakeBody::snakeBody() {
     point setupPosition{};
@@ -18,6 +20,25 @@ snakeBody::snakeBody() {
     width = 10;
     height = 7;
 
+    setupFruits(10);
+
+}
+
+void snakeBody::setupFruits(int fruitCount) {
+
+    std::random_device rd;
+    std::default_random_engine randomEngine(rd());
+    std::uniform_int_distribution<int> x(0, width);
+    std::uniform_int_distribution<int> y(0, height);
+
+    point fruitPoint;
+
+    for (int i=0; i<fruitCount; i++) {
+        fruitPoint={x(randomEngine), y(randomEngine)};
+        fruitPosition.push_back(fruitPoint);
+//        std::cout<<fruitPosition[i].x<<' '<<fruitPosition[i].y<<std::endl;
+    }
+    fruitPosition.shrink_to_fit();
 }
 
 bool snakeBody::isOnMap(point item) const {
@@ -30,7 +51,7 @@ bool snakeBody::snakeMove(speed newSnakeSpeed) {
     bodyPosition.pop_back();
     point newHead = {bodyPosition.front().x+newSnakeSpeed.Vx,
                      bodyPosition.front().y+newSnakeSpeed.Vy};
-    if (!isOnMap(newHead)) return false;
+    if (collisionDetection(newHead)) return false;
     bodyPosition.push_front(newHead);
     return true;
 }
@@ -50,14 +71,35 @@ char snakeBody::isPartOfSnake(point lookingPoint) const {
 
 void snakeBody::debug_display() const {
     point lookingPoint{};
+    char field;
     for (int y=0; y<height; y++) {
         lookingPoint.y=y;
         for (int x=0; x<width; x++){
             lookingPoint.x=x;
-            std::cout<<isPartOfSnake(lookingPoint);
+            field=isPartOfSnake(lookingPoint);
+            if (isSnakeCanEat(lookingPoint)) field='f';
+            std::cout<<' '<<field<<' ';
         }
         std::cout<<std::endl;
     }
 }
+
+bool snakeBody::collisionDetection(point item) const {
+    if (!isOnMap(item)) return true;
+    if (isPartOfSnake(item) == 'o') return true;
+    return false;
+}
+
+bool snakeBody::isSnakeCanEat(point item) const {
+    int fruitCount=fruitPosition.size();
+    for (int isfruit=0; isfruit<=fruitCount; isfruit++) {
+        if (fruitPosition[isfruit].x == item.x &&
+            fruitPosition[isfruit].y == item.y) {
+            return true;
+        }
+    }
+    return false;
+}
+
 
 

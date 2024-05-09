@@ -22,12 +22,15 @@ class snakeBody {
     std::vector<point> fruitPosition;
     int width;
     int height;
+    void setupFruits(int fruitCount);
 public:
     snakeBody();
     [[nodiscard]] bool isOnMap(point item) const;
     bool snakeMove(speed newSnakeSpeed);
     char isPartOfSnake(point lookingPoint) const;
     void debug_display() const;
+    bool collisionDetection(point item) const;
+    bool isSnakeCanEat(point item) const;
 };
 
 
