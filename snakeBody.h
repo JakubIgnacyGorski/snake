@@ -19,13 +19,13 @@ class snakeBody {
     std::list<point> bodyPosition;
     speed snakeSpeed;
 
-    std::vector<point> fruitPosition;
+    point fruit;
     int width;
     int height;
-    void setupFruits(int fruitCount);
-    bool isItFruit(point item) const;
+    void placeFruit();
 public:
     snakeBody();
+    snakeBody(int width, int height, int snakeLength);
     [[nodiscard]] bool isOnMap(point item) const;
     bool snakeMove(speed newSnakeSpeed);
     char isPartOfSnake(point lookingPoint) const;
