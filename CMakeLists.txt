@@ -18,10 +18,13 @@ find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
 
 add_executable(Snake main.cpp
         snakeBody.cpp
+        snakeBody.h)
+add_executable(Snake-SFML main-sfml.cpp
+        snakeBody.cpp
         snakeBody.h
         snakeViewer.cpp
         snakeViewer.h
         snakeController.cpp
         snakeController.h)
 
-target_link_libraries(Snake sfml-graphics)
+target_link_libraries(Snake-SFML sfml-graphics)
