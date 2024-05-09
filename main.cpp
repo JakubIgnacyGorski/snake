@@ -1,9 +1,11 @@
 #include <iostream>
-#include <list> //Reprezentowanie pozycji węża jako lista
+#include "snakeBody.h"
 
 int main() {
 
+    snakeBody test;
 
+    test.debug_display();
 
 
 

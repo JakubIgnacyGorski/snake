@@ -37,7 +37,7 @@ bool snakeBody::snakeMove(speed newSnakeSpeed) {
 
 char snakeBody::isPartOfSnake(point lookingPoint) const {
     auto snakeHeadPointer = bodyPosition.begin();
-    auto snakeBackPointer = bodyPosition.end();
+    auto snakeBackPointer = (--bodyPosition.end());
     if ((*snakeHeadPointer).x == lookingPoint.x &&
         (*snakeHeadPointer).y == lookingPoint.y) return 'G';
     while (snakeHeadPointer!=snakeBackPointer) {
