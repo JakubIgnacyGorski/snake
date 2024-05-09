@@ -98,7 +98,7 @@ void snakeBody::debug_display() const {
 
 bool snakeBody::collisionDetection(point item) const {
     if (!isOnMap(item)) return true;
-    if (isPartOfSnake(item) == 'o') return true;
+    if (isPartOfSnake(item) != '-') return true;
     return false;
 }
 
