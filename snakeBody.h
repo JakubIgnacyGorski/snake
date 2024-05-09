@@ -23,6 +23,7 @@ class snakeBody {
     int width;
     int height;
     void setupFruits(int fruitCount);
+    bool isItFruit(point item) const;
 public:
     snakeBody();
     [[nodiscard]] bool isOnMap(point item) const;

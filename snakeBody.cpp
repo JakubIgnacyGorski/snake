@@ -28,17 +28,29 @@ void snakeBody::setupFruits(int fruitCount) {
 
     std::random_device rd;
     std::default_random_engine randomEngine(rd());
-    std::uniform_int_distribution<int> x(0, width);
-    std::uniform_int_distribution<int> y(0, height);
+    std::uniform_int_distribution<int> x(0, width-1);
+    std::uniform_int_distribution<int> y(0, height-1);
 
     point fruitPoint;
 
     for (int i=0; i<fruitCount; i++) {
         fruitPoint={x(randomEngine), y(randomEngine)};
-        fruitPosition.push_back(fruitPoint);
+        if (isItFruit(fruitPoint)) i--;
+        else fruitPosition.push_back(fruitPoint);
 //        std::cout<<fruitPosition[i].x<<' '<<fruitPosition[i].y<<std::endl;
     }
     fruitPosition.shrink_to_fit();
+}
+
+bool snakeBody::isItFruit(point item) const {
+    auto fruitCount=static_cast<int>(fruitPosition.size());
+    for (int i=0; i<fruitCount; i++) {
+        if (fruitPosition[i].x == item.x &&
+            fruitPosition[i].y == item.y) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool snakeBody::isOnMap(point item) const {
@@ -77,7 +89,7 @@ void snakeBody::debug_display() const {
         for (int x=0; x<width; x++){
             lookingPoint.x=x;
             field=isPartOfSnake(lookingPoint);
-            if (isSnakeCanEat(lookingPoint)) field='f';
+            if (isItFruit(lookingPoint)) field='f';
             std::cout<<' '<<field<<' ';
         }
         std::cout<<std::endl;
@@ -91,15 +103,13 @@ bool snakeBody::collisionDetection(point item) const {
 }
 
 bool snakeBody::isSnakeCanEat(point item) const {
-    int fruitCount=fruitPosition.size();
-    for (int isfruit=0; isfruit<=fruitCount; isfruit++) {
-        if (fruitPosition[isfruit].x == item.x &&
-            fruitPosition[isfruit].y == item.y) {
-            return true;
-        }
+    if (fruitPosition.back().x == item.x &&
+        fruitPosition.back().y == item.y) {
+        return true;
     }
     return false;
 }
+
 
 
 
