@@ -20,6 +20,8 @@ add_executable(Snake main.cpp
         snakeBody.cpp
         snakeBody.h
         snakeViewer.cpp
-        snakeViewer.h)
+        snakeViewer.h
+        snakeController.cpp
+        snakeController.h)
 
 target_link_libraries(Snake sfml-graphics)
