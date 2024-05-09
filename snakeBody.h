@@ -7,10 +7,25 @@
 #include <list>
 #include <vector>
 
+struct point {
+    int x,y;
+};
+
+struct speed {
+    int Vx, Vy;
+};
+
 class snakeBody {
-    std::list<std::pair<int,int>> bodyPosition;
-    float speed;
-    std::vector<std::pair<int,int>> fruitPosition;
+    std::list<point> bodyPosition;
+    speed snakeSpeed;
+
+    std::vector<point> fruitPosition;
+    int width;
+    int height;
+public:
+    snakeBody();
+    [[nodiscard]] bool isOnMap(point item) const;
+    void snakeMove(speed newSnakeSpeed);
 };
 
 
