@@ -25,7 +25,9 @@ class snakeBody {
 public:
     snakeBody();
     [[nodiscard]] bool isOnMap(point item) const;
-    void snakeMove(speed newSnakeSpeed);
+    bool snakeMove(speed newSnakeSpeed);
+    char isPartOfSnake(point lookingPoint) const;
+    void debug_display() const;
 };
 
 
