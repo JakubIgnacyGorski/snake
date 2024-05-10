@@ -36,6 +36,7 @@ public:
     void snakeEating();
     std::list<point> snakePosition() const;
     int getSnakeLength() const;
+    point getFruitPoint() const;
 };
 
 

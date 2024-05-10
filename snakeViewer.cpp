@@ -8,6 +8,8 @@
 snakeViewer::snakeViewer(snakeBody &s) : snake(s) {
     setupSnakeView();
     updateSnakeView();
+    setupFruitView();
+    updateFruitView();
 }
 
 void snakeViewer::setupSnakeView() {
@@ -44,10 +46,16 @@ void snakeViewer::updateSnakeView() {
 }
 
 void snakeViewer::setupFruitView() {
-
+    fruitShape.setFillColor(sf::Color::Red);
+    fruitShape.setRadius(25);
 }
 
 void snakeViewer::updateFruitView() {
+    point fruit=snake.getFruitPoint();
+    int tmpFruitPositionX = fruit.x *(snakeBodySize+10);
+    int tmpFruitPositionY = fruit.y *(snakeBodySize+10);
+
+    fruitShape.setPosition(tmpFruitPositionX, tmpFruitPositionY);
 
 }
 
@@ -64,10 +72,14 @@ void snakeViewer::drawGame(sf::RenderWindow &window) const {
         window.draw(snakeBodyShape[bodyPart]);
     }
 
+    window.draw(fruitShape);
+
 }
 
 void snakeViewer::updateView() {
     updateSnakeView();
+    std::cout<<std::endl;
+    snake.debug_display();
 }
 
 

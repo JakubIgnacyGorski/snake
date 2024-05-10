@@ -9,7 +9,7 @@
 #include "snakeViewer.h"
 
 class snakeController {
-    snakeBody & body;
+    snakeBody & snake;
     snakeViewer & viewer;
     void keyboard(sf::Event & event);
 public:
