@@ -8,9 +8,11 @@
 
 
 snakeBody::snakeBody() {
+    score = 0;
     snakeSpeed = {0, 0};
     width = 10;
     height = 8;
+
 
     point setupPosition{};
 
@@ -23,9 +25,10 @@ snakeBody::snakeBody() {
 }
 
 snakeBody::snakeBody(int width, int height, int snakeLength) {
+    score = 0;
+    snakeSpeed={0,0};
     this->width = width;
     this->height = height;
-    snakeSpeed={0,0};
 
     point setupPosition{};
     int startPlace= snakeLength + 1;
@@ -67,7 +70,11 @@ bool snakeBody::snakeMove(speed newSnakeSpeed) {
                      bodyPosition.front().y+newSnakeSpeed.Vy};
     if (collisionDetection(newHead)) return false;
 
-    if (!isSnakeCanEat(bodyPosition.front())) bodyPosition.pop_back();
+    if (isSnakeCanEat(newHead)) {
+        snakeEating();
+    } else {
+        bodyPosition.pop_back();
+    }
 
     bodyPosition.push_front(newHead);
     return true;
@@ -110,6 +117,19 @@ bool snakeBody::collisionDetection(point item) const {
 bool snakeBody::isSnakeCanEat(point item) const {
     if (fruit.y == item.y && fruit.x == item.x) return true;
     return false;
+}
+
+void snakeBody::snakeEating() {
+    score++;
+    placeFruit();
+}
+
+std::list<point> snakeBody::snakePosition() const {
+    return std::list<point>(bodyPosition);
+}
+
+int snakeBody::getSnakeLength() const {
+    return static_cast<int>(bodyPosition.size());
 }
 
 

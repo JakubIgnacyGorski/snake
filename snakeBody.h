@@ -18,6 +18,7 @@ struct speed {
 class snakeBody {
     std::list<point> bodyPosition;
     speed snakeSpeed;
+    int score;
 
     point fruit;
     int width;
@@ -32,6 +33,9 @@ public:
     void debug_display() const;
     bool collisionDetection(point item) const;
     bool isSnakeCanEat(point item) const;
+    void snakeEating();
+    std::list<point> snakePosition() const;
+    int getSnakeLength() const;
 };
 
 
