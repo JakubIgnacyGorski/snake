@@ -71,14 +71,10 @@ bool snakeBody::snakeMove(speed const & newSnakeSpeed) {
 
     if (collisionDetection(newHead)) return false;
 
-
-    if (isSnakeCanEat(newHead)) {
-        snakeEating(newHead);
-    } else {
+    bodyPosition.push_front(newHead);
+    if (!isSnakeCanEat(newHead)) {
         bodyPosition.pop_back();
     }
-
-    bodyPosition.push_front(newHead);
     return true;
 }
 
@@ -124,8 +120,8 @@ bool snakeBody::isSnakeCanEat(point const & item) const {
     return false;
 }
 
-bool snakeBody::snakeEating(point const & item) {
-    if (isSnakeCanEat(item)) {
+bool snakeBody::snakeEating() {
+    if (isSnakeCanEat(bodyPosition.front())) {
         score++;
         placeFruit();
         return true;

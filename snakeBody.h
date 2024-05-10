@@ -33,7 +33,7 @@ public:
     void debug_display() const;
     bool collisionDetection(point const & item) const;
     bool isSnakeCanEat(point const & item) const;
-    bool snakeEating(point const & item);
+    bool snakeEating();
     std::list<point> snakePosition() const;
     int getSnakeLength() const;
     point getFruitPoint() const;

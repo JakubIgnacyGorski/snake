@@ -77,6 +77,7 @@ void snakeViewer::drawGame(sf::RenderWindow &window) const {
 
 void snakeViewer::updateView() {
     updateSnakeView();
+    updateFruitView();
 //    std::cout<<std::endl;
 //    snake.debug_display();
 }

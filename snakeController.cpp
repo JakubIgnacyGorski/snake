@@ -26,6 +26,9 @@ void snakeController::keyboard(sf::Event &event) {
         default:
             return;
     }
+    if (snake.snakeEating()) {
+        viewer.addSnakePart();
+    }
     viewer.updateView();
 }
 
