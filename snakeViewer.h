@@ -25,8 +25,6 @@ public:
     void drawGame(sf::RenderWindow & window) const;
     void updateView();
     void addSnakePart();
-
-
 };
 
 
