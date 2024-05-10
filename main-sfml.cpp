@@ -12,22 +12,13 @@ int main() {
     window.setVerticalSyncEnabled(false);
     window.setFramerateLimit(30);
 
-    snakeBody body;
+    snakeBody body{10, 10, 7};
     snakeViewer viewer(body);
+    snakeController ctr(body, viewer);
 
-    sf::Event event;
-    while (window.isOpen()) {
-        while(window.pollEvent(event)){
-            switch (event.type) {
-                case sf::Event::Closed:
-                    window.close();
-                    break;
-                default:
-                    break;
-            }
-        }
-        viewer.draw(window);
-    }
+
+    ctr.play(window);
+
 
 
     return 0;
