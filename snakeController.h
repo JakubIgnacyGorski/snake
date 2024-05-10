@@ -11,6 +11,7 @@
 class snakeController {
     snakeBody & body;
     snakeViewer & viewer;
+    void keyboard(sf::Event & event);
 public:
     snakeController(snakeBody & b, snakeViewer & v);
     void play(sf::RenderWindow & window);

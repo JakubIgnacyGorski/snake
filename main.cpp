@@ -3,8 +3,8 @@
 
 int main() {
 
-//    snakeBody test{10, 7, 3};
-    snakeBody test;
+    snakeBody test{10, 7, 4};
+//    snakeBody test;
     test.debug_display();
     speed direction={1,0};
     test.snakeMove(direction);

@@ -17,20 +17,20 @@ void snakeViewer::setupSnakeView() {
     sf::RectangleShape tmpBody;
     tmpBody.setFillColor(sf::Color::Blue);
     tmpBody.setSize(sf::Vector2f(snakeBodySize, snakeBodySize));
-    for (int bodyPart=0; bodyPart<snakeLength; bodyPart++) {
+    for (int bodyPart=0; bodyPart<snakeLength-1; bodyPart++) {
         snakeBodyShape.push_back(tmpBody);
     }
 }
 
 void snakeViewer::updateSnakeView() {
-    snakePosition = snake.snakePosition();
+    std::list<point>snakePosition = snake.snakePosition();
     auto snakeHeadPointer = snakePosition.begin();
-    auto snakeBackPointer = (--snakePosition.end());
 
     int tmpSnakePositionX = snakeHeadPointer->x * (snakeBodySize+10);
     int tmpSnakePositionY = snakeHeadPointer->y * (snakeBodySize+10);
 
     snakeHeadShape.setPosition(tmpSnakePositionX, tmpSnakePositionY);
+//    std::cout<<"-1: "<<tmpSnakePositionX<<','<<tmpSnakePositionY<<std::endl;
 
 
     for (int bodyPart=0; bodyPart< static_cast<int>(snakePosition.size()-1); bodyPart++){
@@ -59,23 +59,15 @@ void snakeViewer::draw(sf::RenderWindow &window) const {
 
 void snakeViewer::drawGame(sf::RenderWindow &window) const {
     window.draw(snakeHeadShape);
-    auto snakeHeadPointer = snakePosition.begin();
-    auto snakeBackPointer = (--snakePosition.end());
-    if (snakeHeadPointer!=snakeBackPointer) {
-        snakeHeadPointer++;
-        int bodyPart=0;
-        while (snakeHeadPointer!=snakeBackPointer){
-            window.draw(snakeBodyShape[bodyPart]);
-            snakeHeadPointer++;
-            bodyPart++;
-//            std::cout<<bodyPart<<std::endl;
-        }
+    int snakeLength=snakeBodyShape.size();
+    for (int bodyPart=0; bodyPart<snakeLength; bodyPart++){
+        window.draw(snakeBodyShape[bodyPart]);
     }
 
 }
 
 void snakeViewer::updateView() {
-
+    updateSnakeView();
 }
 
 

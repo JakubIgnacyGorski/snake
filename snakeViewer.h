@@ -15,7 +15,6 @@ class snakeViewer {
     sf::RectangleShape snakeHeadShape;
     std::vector<sf::RectangleShape> snakeBodyShape;
     sf::CircleShape fruitShape;
-    std::list<point> snakePosition;
     void setupSnakeView();
     void updateSnakeView();
     void setupFruitView();
