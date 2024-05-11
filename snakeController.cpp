@@ -52,6 +52,12 @@ void snakeController::changeDirection(speed newDir) {
     moveDelay=clock.restart();
 }
 
+void snakeController::mouse(sf::Event &event) {
+    if (event.mouseButton.button != sf::Mouse::Button::Left) return;
+
+    std::string test = menu.buttonPressed(event.mouseButton.x, event.mouseButton.y);
+    std::cout<<test<<std::endl;
+}
 
 void snakeController::play(sf::RenderWindow & window) {
     while (window.isOpen()) {
@@ -63,6 +69,9 @@ void snakeController::play(sf::RenderWindow & window) {
                     break;
                 case sf::Event::KeyPressed:
                     keyboard(event);
+                    break;
+                case sf::Event::MouseButtonPressed:
+                    mouse(event);
                     break;
                 default:
                     break;
@@ -85,6 +94,8 @@ void snakeController::play(sf::RenderWindow & window) {
         window.display();
     }
 }
+
+
 
 
 

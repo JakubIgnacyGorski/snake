@@ -18,6 +18,7 @@ class snakeController {
     void keyboard(sf::Event & event);
     void timeMove();
     void changeDirection(speed newDir);
+    void mouse(sf::Event & event);
 public:
     snakeController(snakeBody & b, snakeViewer & v, snakeMenu & m);
     void play(sf::RenderWindow & window);

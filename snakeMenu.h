@@ -13,13 +13,18 @@ class snakeMenu {
 //    sf::RectangleShape scoreboardShape;
 //    sf::RectangleShape exitButton;
     sf::RectangleShape menuButtonShapes[5];
+    sf::Font Font;
+    sf::Text menu[5];
     int windowWidth;
     int windowHeight;
     void setupButtons();
     void updateButtons();
+    void setupText();
+    void updateText();
 public:
     explicit snakeMenu(sf::RenderWindow & window);
     void drawMenu(sf::RenderWindow & window) const;
+    std::string buttonPressed(int x, int y) const;
 };
 
 
