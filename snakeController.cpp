@@ -36,23 +36,23 @@ void snakeController::timeMove() {
 //    sf::Time moveDelay;
     moveDelay = clock.getElapsedTime();
 
-    if (moveDelay.asMilliseconds()<=300) return;
+    if (moveDelay.asMilliseconds()<=200) return;
 
     snake.snakeMove(snakeSpeed);
     std::cout<<moveDelay.asMilliseconds()<<": "<<snake.snakePosition().front().x<<','<<snake.snakePosition().front().y<<std::endl;
-    std::cout<<"Snake speed: "<<snakeSpeed.Vx << snakeSpeed.Vy<<std::endl;
+    std::cout<<"Snake speed: "<<snakeSpeed.Vx <<','<< snakeSpeed.Vy<<std::endl;
     if (snake.snakeEating()) viewer.addSnakePart();
     viewer.updateView();
     moveDelay = clock.restart();
 }
 
 void snakeController::changeDirection(speed newDir) {
-    if (snake.getSnakeSpeed()!=newDir) {
-        snake.snakeMove(newDir);
-        if (snake.snakeEating()) viewer.addSnakePart();
-        moveDelay=clock.restart();
-    }
-    snake.setSnakeSpeed(newDir);
+    speed reversDir {-newDir.Vx, -newDir.Vy};
+    if (snake.getSnakeSpeed()==newDir || snake.getSnakeSpeed()==reversDir) return;
+    snake.snakeMove(newDir);
+    if (snake.snakeEating()) viewer.addSnakePart();
+    moveDelay=clock.restart();
+//    snake.setSnakeSpeed(newDir);
 }
 
 

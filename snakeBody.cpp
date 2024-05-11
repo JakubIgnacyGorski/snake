@@ -58,8 +58,8 @@ void snakeBody::placeFruit() {
 }
 
 bool snakeBody::isOnMap(point const & item) const {
-    if (item.x >= width || item.x < 0) return false;
-    if (item.y >=height || item.y <0) return false;
+    if (item.x >=width || item.x<0) return false;
+    if (item.y >=height || item.y<0) return false;
     return true;
 }
 
