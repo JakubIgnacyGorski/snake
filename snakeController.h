@@ -11,7 +11,11 @@
 class snakeController {
     snakeBody & snake;
     snakeViewer & viewer;
+    sf::Clock clock;
+    sf::Time moveDelay;
     void keyboard(sf::Event & event);
+    void timeMove();
+    void changeDirection(speed newDir);
 public:
     snakeController(snakeBody & b, snakeViewer & v);
     void play(sf::RenderWindow & window);

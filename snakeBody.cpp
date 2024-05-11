@@ -5,8 +5,6 @@
 #include "snakeBody.h"
 #include <iostream>
 #include <random>
-
-
 snakeBody::snakeBody() {
     score = 0;
     snakeSpeed = {0, 0};
@@ -21,7 +19,7 @@ snakeBody::snakeBody() {
         bodyPosition.emplace_back(setupPosition);
     }
 
-    fruit = {7, 4};
+    fruitPoint = {7, 4};
 }
 
 snakeBody::snakeBody(int width, int height, int snakeLength) {
@@ -55,8 +53,8 @@ void snakeBody::placeFruit() {
     std::uniform_int_distribution<int> y(0, height-1);
 
     do {
-        fruit = {x(randomEngine), y(randomEngine)};
-    } while (isPartOfSnake(fruit) != '-');
+        fruitPoint = {x(randomEngine), y(randomEngine)};
+    } while (isPartOfSnake(fruitPoint) != '-');
 }
 
 bool snakeBody::isOnMap(point const & item) const {
@@ -68,28 +66,26 @@ bool snakeBody::isOnMap(point const & item) const {
 bool snakeBody::snakeMove(speed const & newSnakeSpeed) {
     point newHead = {bodyPosition.front().x+newSnakeSpeed.Vx,
                      bodyPosition.front().y+newSnakeSpeed.Vy};
-
     if (collisionDetection(newHead)) return false;
 
     bodyPosition.push_front(newHead);
     if (!isSnakeCanEat(newHead)) {
         bodyPosition.pop_back();
     }
+
+    setSnakeSpeed(newSnakeSpeed);
     return true;
 }
 
 char snakeBody::isPartOfSnake(point const & lookingPoint) const {
     auto snakeHeadPointer = bodyPosition.begin();
     auto snakeBackPointer = (--bodyPosition.end());
-    if (snakeHeadPointer->x == lookingPoint.x &&
-        snakeHeadPointer->y == lookingPoint.y) return 'G';
-    if (snakeBackPointer->x == lookingPoint.x &&
-        snakeBackPointer->y == lookingPoint.y) return 'b';
+    if ((*snakeHeadPointer) == lookingPoint) return 'G';
+    if ((*snakeBackPointer) == lookingPoint) return 'b';
     snakeBackPointer--;
     while (snakeHeadPointer!=snakeBackPointer) {
         snakeHeadPointer++;
-        if (snakeHeadPointer->x == lookingPoint.x &&
-            snakeHeadPointer->y == lookingPoint.y) return 'o';
+        if ((*snakeHeadPointer) == lookingPoint) return 'o';
     }
     return '-';
 }
@@ -102,7 +98,7 @@ void snakeBody::debug_display() const {
         for (int x=0; x<width; x++){
             lookingPoint.x=x;
             field=isPartOfSnake(lookingPoint);
-            if (y==fruit.y && x==fruit.x) field='f';
+            if (y == fruitPoint.y && x == fruitPoint.x) field='f';
             std::cout<<' '<<field<<' ';
         }
         std::cout<<std::endl;
@@ -116,8 +112,7 @@ bool snakeBody::collisionDetection(point const & item) const {
 }
 
 bool snakeBody::isSnakeCanEat(point const & item) const {
-    if (fruit.y == item.y && fruit.x == item.x) return true;
-    return false;
+    return (fruitPoint == item);
 }
 
 bool snakeBody::snakeEating() {
@@ -139,13 +134,16 @@ int snakeBody::getSnakeLength() const {
 }
 
 point snakeBody::getFruitPoint() const {
-    return fruit;
+    return fruitPoint;
 }
 
 speed snakeBody::getSnakeSpeed() const {
     return snakeSpeed;
 }
 
+void snakeBody::setSnakeSpeed(speed newSpeed) {
+    snakeSpeed = newSpeed;
+}
 
 
 

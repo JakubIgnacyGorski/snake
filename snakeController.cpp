@@ -12,29 +12,51 @@ snakeController::snakeController(snakeBody &b, snakeViewer &v) : snake(b), viewe
 void snakeController::keyboard(sf::Event &event) {
     switch (event.key.code) {
         case (sf::Keyboard::Key::Right):
-            snake.snakeMove(speed{1, 0});
+            changeDirection(speed{1, 0});
             break;
         case (sf::Keyboard::Key::Left):
-            snake.snakeMove(speed{-1, 0});
+            changeDirection(speed{-1, 0});
             break;
         case (sf::Keyboard::Key::Up):
-            snake.snakeMove(speed{0, -1});
+            changeDirection(speed{0, -1});
             break;
         case (sf::Keyboard::Key::Down):
-            snake.snakeMove(speed{0, 1});
+            changeDirection(speed{0, 1});
             break;
         default:
             return;
     }
-    if (snake.snakeEating()) {
-        viewer.addSnakePart();
-    }
     viewer.updateView();
+}
+
+void snakeController::timeMove() {
+    speed snakeSpeed = snake.getSnakeSpeed();
+    if (snakeSpeed.Vx == 0 && snakeSpeed.Vy == 0) return;
+
+//    sf::Time moveDelay;
+    moveDelay = clock.getElapsedTime();
+
+    if (moveDelay.asMilliseconds()<=300) return;
+
+    snake.snakeMove(snakeSpeed);
+    std::cout<<moveDelay.asMilliseconds()<<": "<<snake.snakePosition().front().x<<','<<snake.snakePosition().front().y<<std::endl;
+    std::cout<<"Snake speed: "<<snakeSpeed.Vx << snakeSpeed.Vy<<std::endl;
+    if (snake.snakeEating()) viewer.addSnakePart();
+    viewer.updateView();
+    moveDelay = clock.restart();
+}
+
+void snakeController::changeDirection(speed newDir) {
+    if (snake.getSnakeSpeed()!=newDir) {
+        snake.snakeMove(newDir);
+        if (snake.snakeEating()) viewer.addSnakePart();
+        moveDelay=clock.restart();
+    }
+    snake.setSnakeSpeed(newDir);
 }
 
 
 void snakeController::play(sf::RenderWindow & window) {
-
     while (window.isOpen()) {
         sf::Event event{};
         while(window.pollEvent(event)){
@@ -49,10 +71,13 @@ void snakeController::play(sf::RenderWindow & window) {
                     break;
             }
         }
-
+        timeMove();
         viewer.draw(window);
     }
 }
+
+
+
 
 
 
