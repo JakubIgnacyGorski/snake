@@ -21,7 +21,6 @@ class snakeViewer {
     void updateFruitView();
 public:
     explicit snakeViewer(snakeBody & s);
-    void draw(sf::RenderWindow & window) const;
     void drawGame(sf::RenderWindow & window) const;
     void updateView();
     void addSnakePart();

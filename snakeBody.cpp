@@ -10,6 +10,7 @@ snakeBody::snakeBody() {
     snakeSpeed = {0, 0};
     width = 10;
     height = 8;
+    State = MENU;
 
 
     point setupPosition{};
@@ -22,9 +23,10 @@ snakeBody::snakeBody() {
     fruitPoint = {7, 4};
 }
 
-snakeBody::snakeBody(int width, int height, int snakeLength) {
+snakeBody::snakeBody(int width, int height, int snakeLength, GameState startupState) {
     score = 0;
     snakeSpeed={0,0};
+    State = startupState;
     this->width = width;
     this->height = height;
 
@@ -46,7 +48,7 @@ snakeBody::snakeBody(int width, int height, int snakeLength) {
 
 
 void snakeBody::placeFruit() {
-
+    if (State!=RUNNING) return;
     std::random_device rd;
     std::default_random_engine randomEngine(rd());
     std::uniform_int_distribution<int> x(0, width-1);
@@ -64,9 +66,13 @@ bool snakeBody::isOnMap(point const & item) const {
 }
 
 bool snakeBody::snakeMove(speed const & newSnakeSpeed) {
+    if (State!=RUNNING) return false;
     point newHead = {bodyPosition.front().x+newSnakeSpeed.Vx,
                      bodyPosition.front().y+newSnakeSpeed.Vy};
-    if (collisionDetection(newHead)) return false;
+    if (collisionDetection(newHead)) {
+        State=LOSE;
+        return false;
+    }
 
     bodyPosition.push_front(newHead);
     if (!isSnakeCanEat(newHead)) {
@@ -116,13 +122,14 @@ bool snakeBody::isSnakeCanEat(point const & item) const {
 }
 
 bool snakeBody::snakeEating() {
+    if (State!=RUNNING) return false;
     if (isSnakeCanEat(bodyPosition.front())) {
         score++;
         placeFruit();
+        std::cout<<"Punkty: "<<score<<std::endl;
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 std::list<point> snakeBody::snakePosition() const {
@@ -144,6 +151,16 @@ speed snakeBody::getSnakeSpeed() const {
 void snakeBody::setSnakeSpeed(speed newSpeed) {
     snakeSpeed = newSpeed;
 }
+
+GameState snakeBody::getGameState() const {
+    return State;
+}
+
+void snakeBody::changeGameState(GameState newGameState) {
+    State = newGameState;
+}
+
+
 
 
 

@@ -7,6 +7,8 @@
 #include <list>
 #include <vector>
 
+enum GameState {RUNNING, LOSE, SCOREBOARD, MENU};
+
 struct point {
     int x,y;
     bool operator==(const point &p) const {return (x==p.x && y==p.y);}
@@ -22,6 +24,7 @@ struct speed {
 class snakeBody {
     std::list<point> bodyPosition;
     speed snakeSpeed;
+    GameState State;
     int score;
 
     point fruitPoint;
@@ -30,7 +33,7 @@ class snakeBody {
     void placeFruit();
 public:
     snakeBody();
-    snakeBody(int width, int height, int snakeLength);
+    snakeBody(int width, int height, int snakeLength, GameState startupState);
     [[nodiscard]] bool isOnMap(point const & item) const;
     bool snakeMove(speed const & newSnakeSpeed);
     char isPartOfSnake(point const & lookingPoint) const;
@@ -43,6 +46,8 @@ public:
     point getFruitPoint() const;
     speed getSnakeSpeed() const;
     void setSnakeSpeed(speed newSpeed);
+    GameState getGameState() const;
+    void changeGameState(GameState newGameState);
 };
 
 

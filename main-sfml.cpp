@@ -12,9 +12,10 @@ int main() {
     window.setVerticalSyncEnabled(false);
     window.setFramerateLimit(30);
 
-    snakeBody body{10, 10, 8};
+    snakeBody body{10, 10, 8, MENU};
     snakeViewer viewer(body);
-    snakeController ctr(body, viewer);
+    snakeMenu menu{window};
+    snakeController ctr(body, viewer, menu);
 
 
     ctr.play(window);

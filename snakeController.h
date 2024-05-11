@@ -7,17 +7,19 @@
 #include <SFML/Graphics.hpp>
 #include "snakeBody.h"
 #include "snakeViewer.h"
+#include "snakeMenu.h"
 
 class snakeController {
     snakeBody & snake;
     snakeViewer & viewer;
+    snakeMenu & menu;
     sf::Clock clock;
     sf::Time moveDelay;
     void keyboard(sf::Event & event);
     void timeMove();
     void changeDirection(speed newDir);
 public:
-    snakeController(snakeBody & b, snakeViewer & v);
+    snakeController(snakeBody & b, snakeViewer & v, snakeMenu & m);
     void play(sf::RenderWindow & window);
 };
 

@@ -59,13 +59,8 @@ void snakeViewer::updateFruitView() {
 
 }
 
-void snakeViewer::draw(sf::RenderWindow &window) const {
-    window.clear(sf::Color(250, 250, 250));
-    drawGame(window);
-    window.display();
-}
-
 void snakeViewer::drawGame(sf::RenderWindow &window) const {
+    window.clear(sf::Color(250, 250, 250));
     window.draw(snakeHeadShape);
     for (int bodyPart=0; bodyPart< static_cast<int>(snakeBodyShape.size()); bodyPart++){
         window.draw(snakeBodyShape[bodyPart]);

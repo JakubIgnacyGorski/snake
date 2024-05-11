@@ -5,9 +5,7 @@
 #include "snakeController.h"
 #include <iostream>
 
-snakeController::snakeController(snakeBody &b, snakeViewer &v) : snake(b), viewer(v) {
-
-}
+snakeController::snakeController(snakeBody &b, snakeViewer &v, snakeMenu &m) : snake(b), viewer(v), menu(m){}
 
 void snakeController::keyboard(sf::Event &event) {
     switch (event.key.code) {
@@ -39,8 +37,8 @@ void snakeController::timeMove() {
     if (moveDelay.asMilliseconds()<=200) return;
 
     snake.snakeMove(snakeSpeed);
-    std::cout<<moveDelay.asMilliseconds()<<": "<<snake.snakePosition().front().x<<','<<snake.snakePosition().front().y<<std::endl;
-    std::cout<<"Snake speed: "<<snakeSpeed.Vx <<','<< snakeSpeed.Vy<<std::endl;
+//    std::cout<<moveDelay.asMilliseconds()<<": "<<snake.snakePosition().front().x<<','<<snake.snakePosition().front().y<<std::endl;
+//    std::cout<<"Snake speed: "<<snakeSpeed.Vx <<','<< snakeSpeed.Vy<<std::endl;
     if (snake.snakeEating()) viewer.addSnakePart();
     viewer.updateView();
     moveDelay = clock.restart();
@@ -52,7 +50,6 @@ void snakeController::changeDirection(speed newDir) {
     snake.snakeMove(newDir);
     if (snake.snakeEating()) viewer.addSnakePart();
     moveDelay=clock.restart();
-//    snake.setSnakeSpeed(newDir);
 }
 
 
@@ -71,8 +68,21 @@ void snakeController::play(sf::RenderWindow & window) {
                     break;
             }
         }
-        timeMove();
-        viewer.draw(window);
+
+        switch (snake.getGameState()) {
+            case RUNNING:
+                timeMove();
+                viewer.drawGame(window);
+                break;
+            case MENU:
+                menu.drawMenu(window);
+                break;
+            case LOSE:
+                break;
+            case SCOREBOARD:
+                break;
+        }
+        window.display();
     }
 }
 

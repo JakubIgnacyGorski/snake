@@ -25,6 +25,9 @@ add_executable(Snake-SFML main-sfml.cpp
         snakeViewer.cpp
         snakeViewer.h
         snakeController.cpp
-        snakeController.h)
+        snakeController.h
+        snakeMenu.cpp
+        snakeMenu.h
+)
 
 target_link_libraries(Snake-SFML sfml-graphics)
