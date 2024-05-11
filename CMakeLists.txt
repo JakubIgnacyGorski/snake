@@ -30,4 +30,8 @@ add_executable(Snake-SFML main-sfml.cpp
         snakeMenu.h
 )
 
+if (TARGET Snake-SFML) # Źródło: https://cmake.org/cmake/help/latest/command/if.html
+    file (COPY fonts DESTINATION . FILES_MATCHING PATTERN "*.ttf")
+endif ()
+
 target_link_libraries(Snake-SFML sfml-graphics)
