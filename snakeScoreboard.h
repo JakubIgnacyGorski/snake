@@ -5,11 +5,21 @@
 #ifndef SNAKE_SNAKESCOREBOARD_H
 #define SNAKE_SNAKESCOREBOARD_H
 #include <iostream>
+#include <array>
+
+struct playerScoreboard {
+    std::string name;
+    unsigned int score;
+};
 
 class snakeScoreboard {
-    std::string scoreboard[10];
+    std::array<playerScoreboard, 10> player;
+    unsigned short int scoreboardCount;
+    std::string const saveFileName="scoreboard.save";
 public:
     snakeScoreboard();
+    void sortPlayerScoreboard();
+    bool saveScoreboardToFile();
 };
 
 
