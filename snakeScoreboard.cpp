@@ -24,7 +24,9 @@ snakeScoreboard::snakeScoreboard() {
     scoreboardFile.close();
     sortPlayerScoreboard();
 
-    addPlayerToScoreboard("Niety", 3);
+//    for (auto test : player) {
+//        std::cout<<test.name<<','<<test.score<<std::endl;
+//    }
 }
 
 void snakeScoreboard::sortPlayerScoreboard() {
@@ -53,7 +55,9 @@ bool snakeScoreboard::compareName(const std::string &playerName, const unsigned 
     for (int playerCount=0; playerCount<scoreboardCount; playerCount++) {
         if (std::equal(player[playerCount].name.begin(), player[playerCount].name.end(),
                        playerName.begin(), playerName.end())){
-            if (playerScore>player[playerCount].score) player[playerCount].score = playerScore;
+            if (playerScore>player[playerCount].score) {
+                player[playerCount].score = playerScore;
+            }
             return true;
         }
     }
@@ -63,8 +67,8 @@ bool snakeScoreboard::compareName(const std::string &playerName, const unsigned 
 bool snakeScoreboard::compareScore(const std::string &playerName, const unsigned int playerScore) {
     for (int playerCount=0; playerCount<scoreboardCount; playerCount++) {
         if (playerScore > player[playerCount].score) {
-            player[playerCount].name = playerName;
-            player[playerCount].score = playerScore;
+            player[scoreboardCount-1].name = playerName;
+            player[scoreboardCount-1].score = playerScore;
             return true;
         }
     }
