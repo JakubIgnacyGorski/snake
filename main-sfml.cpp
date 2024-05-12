@@ -17,7 +17,7 @@ int main() {
     snakeViewer viewer(body, window);
     snakeMenu menu{window};
     snakeScoreboard scoreboard;
-    snakeController ctr(body, viewer, menu,scoreboard, window);
+    snakeController ctr(body, viewer, menu,scoreboard);
 
     ctr.play(window);
 

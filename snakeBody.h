@@ -25,7 +25,7 @@ class snakeBody {
     std::list<point> bodyPosition;
     speed snakeSpeed;
     GameState State;
-    int score;
+    unsigned int score;
 
     point fruitPoint;
     int boardWidth;

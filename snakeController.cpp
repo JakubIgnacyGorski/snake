@@ -5,10 +5,8 @@
 #include "snakeController.h"
 #include <iostream>
 
-snakeController::snakeController(snakeBody &b, snakeViewer &v, snakeMenu &m,snakeScoreboard &s,  sf::RenderWindow const & window) : snake(b), viewer(v), menu(m), scoreboard(s){
+snakeController::snakeController(snakeBody &b, snakeViewer &v, snakeMenu &m,snakeScoreboard &s) : snake(b), viewer(v), menu(m), scoreboard(s){
     timeToMove = 200;
-    windowWidth = window.getSize().x;
-    windowHeight = window.getSize().y;
 }
 
 void snakeController::keyboard(sf::Event &event) {
@@ -35,9 +33,7 @@ void snakeController::timeMove() {
     speed snakeSpeed = snake.getSnakeSpeed();
     if (snakeSpeed == speed{0,0}) return;
 
-//    sf::Time moveDelay;
     moveDelay = clock.getElapsedTime();
-
     if (moveDelay.asMilliseconds()<=timeToMove) return;
 
     snake.snakeMove(snakeSpeed);
@@ -67,17 +63,42 @@ void snakeController::mouse(sf::Event &event, sf::RenderWindow & window) {
         window.close();
     } else if (button == "EASY") {
         Difficulty = EASY;
-        createNewGame();
+        createNewGame(window);
     } else if (button == "NORMAL") {
         Difficulty = NORMAL;
-        createNewGame();
+        createNewGame(window);
     } else if (button == "HARD") {
         Difficulty = HARD;
-        createNewGame();
+        createNewGame(window);
     } else if (button == "SCOREBOARD") {
         std::cout<<"SCOREBOARD"<<std::endl;
     }
 }
+
+void snakeController::createNewGame(const sf::RenderWindow & window) {
+    int width = static_cast<int>(window.getSize().x*0.05);
+    int height = static_cast<int>(window.getSize().y*0.05);
+    int snakeLength;
+
+    switch (Difficulty) {
+        case EASY:
+            snakeLength = static_cast<int>(width*0.3);
+            timeToMove = 150;
+            break;
+        case NORMAL:
+            snakeLength = static_cast<int>(width*0.5);
+            timeToMove = 100;
+            break;
+        case HARD:
+            snakeLength = static_cast<int>(width*0.7);
+            timeToMove = 50;
+            break;
+    }
+
+    snake = snakeBody(width, height, snakeLength, RUNNING);
+    viewer.newSnake();
+}
+
 
 void snakeController::play(sf::RenderWindow & window) {
     while (window.isOpen()) {
@@ -113,31 +134,6 @@ void snakeController::play(sf::RenderWindow & window) {
         }
         window.display();
     }
-}
-
-void snakeController::createNewGame() {
-    int width = windowWidth*0.05;
-    int height = windowHeight*0.05;
-    int snakeLength;
-
-    switch (Difficulty) {
-        case EASY:
-            snakeLength = width*0.3;
-            timeToMove = 150;
-            break;
-        case NORMAL:
-            snakeLength = width*0.5;
-            timeToMove = 100;
-            break;
-        case HARD:
-            snakeLength = width*0.7;
-            timeToMove = 50;
-            break;
-    }
-
-    snake = snakeBody(width, height, snakeLength, RUNNING);
-    viewer.newSnake();
-
 }
 
 

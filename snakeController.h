@@ -21,16 +21,14 @@ class snakeController {
     sf::Clock clock;
     sf::Time moveDelay;
     int timeToMove;
-    int windowWidth;
-    int windowHeight;
     void keyboard(sf::Event & event);
     void timeMove();
     void changeDirection(speed newDir);
     void mouse(sf::Event & event, sf::RenderWindow & window);
+    void createNewGame(const sf::RenderWindow & window);
 public:
-    snakeController(snakeBody & b, snakeViewer & v, snakeMenu & m, snakeScoreboard & s, sf::RenderWindow const & window);
+    snakeController(snakeBody & b, snakeViewer & v, snakeMenu & m, snakeScoreboard & s);
     void play(sf::RenderWindow & window);
-    void createNewGame();
 };
 
 
