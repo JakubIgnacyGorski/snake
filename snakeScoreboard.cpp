@@ -4,9 +4,6 @@
 
 #include "snakeScoreboard.h"
 #include <fstream> // źródło: https://cplusplus.com/doc/tutorial/files/
-#include <iostream>
-#include <array>
-#include <string>
 #include <sstream>
 #include <algorithm>
 
@@ -18,7 +15,7 @@ snakeScoreboard::snakeScoreboard() {
 
     if (!scoreboardFile.is_open()) abort(); //Dodać komunikat błędu
 
-    while (std::getline(scoreboardFile, line)){
+    while (std::getline(scoreboardFile, line) && scoreboardCount<scoreboardSize){
         std::istringstream iss(line); //źródło: https://cplusplus.com/reference/sstream/istringstream/istringstream/
         iss >> player[scoreboardCount].name >> player[scoreboardCount].score;
 //        std::cout << "Nazwa: " << player[scoreboardCount].name << " Punkty: " << player[scoreboardCount].score << std::endl;
@@ -26,9 +23,8 @@ snakeScoreboard::snakeScoreboard() {
     }
     scoreboardFile.close();
 
-
-
     sortPlayerScoreboard();
+    addPlayerToScoreboard("ja", 1000000);
     saveScoreboardToFile();
 }
 
@@ -42,15 +38,27 @@ void snakeScoreboard::sortPlayerScoreboard() {
 
 bool snakeScoreboard::saveScoreboardToFile() {
     std::ofstream scoreboardFile;
-    std::string line;
-    scoreboardFile.open(saveFileName , std::ios::trunc);
+    scoreboardFile.open(saveFileName, std::ios::trunc);
 
-    if (!scoreboardFile.is_open()) abort();
+    if (!scoreboardFile.is_open()) return false;
 
     for (int lineCount=0; lineCount<scoreboardCount; lineCount++) {
         scoreboardFile << player[lineCount].name << ' ' <<player[lineCount].score<<std::endl;
     }
     scoreboardFile.close();
 
-    return false;
+    return true;
+}
+
+void snakeScoreboard::addPlayerToScoreboard(const std::string &playerName, const unsigned int playerScore) {
+
+    for (int playerCount=0; playerCount<scoreboardCount; playerCount++) {
+        if (playerScore > player[playerCount].score) {
+            player[playerCount].name = playerName;
+            player[playerCount].score = playerScore;
+            playerCount=scoreboardCount;
+        }
+    }
+    sortPlayerScoreboard();
+    saveScoreboardToFile();
 }

@@ -5,7 +5,7 @@
 #include "snakeController.h"
 #include <iostream>
 
-snakeController::snakeController(snakeBody &b, snakeViewer &v, snakeMenu &m,  sf::RenderWindow const & window) : snake(b), viewer(v), menu(m){
+snakeController::snakeController(snakeBody &b, snakeViewer &v, snakeMenu &m,snakeScoreboard &s,  sf::RenderWindow const & window) : snake(b), viewer(v), menu(m), scoreboard(s){
     timeToMove = 200;
     windowWidth = window.getSize().x;
     windowHeight = window.getSize().y;
