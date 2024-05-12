@@ -24,6 +24,7 @@ void snakeViewer::setupSnakeView() {
     snakeHeadShape.setFillColor(sf::Color::Green);
     snakeHeadShape.setSize(sf::Vector2f(snakeBodySize,snakeBodySize));
     int snakeLength=snake.getSnakeLength();
+    snakeBodyShape.reserve(snakeLength-1);
     sf::RectangleShape tmpBody;
     tmpBody.setFillColor(sf::Color::Blue);
     tmpBody.setSize(sf::Vector2f(snakeBodySize, snakeBodySize));
