@@ -28,8 +28,8 @@ class snakeBody {
     int score;
 
     point fruitPoint;
-    int width;
-    int height;
+    int boardWidth;
+    int boardHeight;
     void placeFruit();
 public:
     snakeBody();
@@ -48,6 +48,7 @@ public:
     void setSnakeSpeed(speed newSpeed);
     GameState getGameState() const;
     void changeGameState(GameState newGameState);
+    point getBoardSize() const;
 };
 
 

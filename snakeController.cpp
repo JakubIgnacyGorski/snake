@@ -5,7 +5,11 @@
 #include "snakeController.h"
 #include <iostream>
 
-snakeController::snakeController(snakeBody &b, snakeViewer &v, snakeMenu &m) : snake(b), viewer(v), menu(m){}
+snakeController::snakeController(snakeBody &b, snakeViewer &v, snakeMenu &m,  sf::RenderWindow const & window) : snake(b), viewer(v), menu(m){
+    timeToMove = 200;
+    windowWidth = window.getSize().x;
+    windowHeight = window.getSize().y;
+}
 
 void snakeController::keyboard(sf::Event &event) {
     switch (event.key.code) {
@@ -29,12 +33,12 @@ void snakeController::keyboard(sf::Event &event) {
 
 void snakeController::timeMove() {
     speed snakeSpeed = snake.getSnakeSpeed();
-    if (snakeSpeed.Vx == 0 && snakeSpeed.Vy == 0) return;
+    if (snakeSpeed == speed{0,0}) return;
 
 //    sf::Time moveDelay;
     moveDelay = clock.getElapsedTime();
 
-    if (moveDelay.asMilliseconds()<=200) return;
+    if (moveDelay.asMilliseconds()<=timeToMove) return;
 
     snake.snakeMove(snakeSpeed);
 //    std::cout<<moveDelay.asMilliseconds()<<": "<<snake.snakePosition().front().x<<','<<snake.snakePosition().front().y<<std::endl;
@@ -46,17 +50,33 @@ void snakeController::timeMove() {
 
 void snakeController::changeDirection(speed newDir) {
     speed reversDir {-newDir.Vx, -newDir.Vy};
-    if (snake.getSnakeSpeed()==newDir || snake.getSnakeSpeed()==reversDir) return;
+    speed snakeSpeed = snake.getSnakeSpeed();
+    if (snakeSpeed == newDir || snake.getSnakeSpeed()==reversDir) return;
+    if (snakeSpeed == speed{0,0} && newDir.Vx<0) return;
     snake.snakeMove(newDir);
     if (snake.snakeEating()) viewer.addSnakePart();
     moveDelay=clock.restart();
 }
 
-void snakeController::mouse(sf::Event &event) {
+void snakeController::mouse(sf::Event &event, sf::RenderWindow & window) {
     if (event.mouseButton.button != sf::Mouse::Button::Left) return;
 
-    std::string test = menu.buttonPressed(event.mouseButton.x, event.mouseButton.y);
-    std::cout<<test<<std::endl;
+    std::string button = menu.buttonPressed(event.mouseButton.x, event.mouseButton.y);
+
+    if (button == "EXIT") {
+        window.close();
+    } else if (button == "EASY") {
+        Difficulty = EASY;
+        createNewGame();
+    } else if (button == "NORMAL") {
+        Difficulty = NORMAL;
+        createNewGame();
+    } else if (button == "HARD") {
+        Difficulty = HARD;
+        createNewGame();
+    } else if (button == "SCOREBOARD") {
+        std::cout<<"SCOREBOARD"<<std::endl;
+    }
 }
 
 void snakeController::play(sf::RenderWindow & window) {
@@ -71,7 +91,7 @@ void snakeController::play(sf::RenderWindow & window) {
                     keyboard(event);
                     break;
                 case sf::Event::MouseButtonPressed:
-                    mouse(event);
+                    mouse(event, window);
                     break;
                 default:
                     break;
@@ -93,6 +113,31 @@ void snakeController::play(sf::RenderWindow & window) {
         }
         window.display();
     }
+}
+
+void snakeController::createNewGame() {
+    int width = windowWidth*0.05;
+    int height = windowHeight*0.05;
+    int snakeLength;
+
+    switch (Difficulty) {
+        case EASY:
+            snakeLength = width*0.3;
+            timeToMove = 150;
+            break;
+        case NORMAL:
+            snakeLength = width*0.5;
+            timeToMove = 100;
+            break;
+        case HARD:
+            snakeLength = width*0.7;
+            timeToMove = 50;
+            break;
+    }
+
+    snake = snakeBody(width, height, snakeLength, RUNNING);
+    viewer.newSnake();
+
 }
 
 

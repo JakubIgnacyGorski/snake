@@ -65,10 +65,10 @@ void snakeMenu::updateButtons() {
 void snakeMenu::setupText() {
     std::string const setstring[] = { "EASY", "NORMAL", "HARD", "SCOREBOARD", "EXIT"};
     for (int text=0; text<5; text++) {
-        menu[text].setFont(Font);
-        menu[text].setCharacterSize(20);
-        menu[text].setFillColor(sf::Color::Black);
-        menu[text].setString(setstring[text]);
+        menuText[text].setFont(Font);
+        menuText[text].setCharacterSize(menuButtonShapes[text].getSize().y*0.3);
+        menuText[text].setFillColor(sf::Color::Black);
+        menuText[text].setString(setstring[text]);
     }
 }
 
@@ -77,14 +77,14 @@ void snakeMenu::updateText() {
     int buttonWidth, buttonHeight;
     int leftUpButtonCornerX, leftUpButtonCornerY;
     for (int text=0; text<5; text++) {
-        textWidth = menu[text].getLocalBounds().width;
-        textHeight = menu[text].getLocalBounds().height;
+        textWidth = menuText[text].getLocalBounds().width;
+        textHeight = menuText[text].getLocalBounds().height;
         buttonWidth = menuButtonShapes[text].getLocalBounds().width;
         buttonHeight = menuButtonShapes[text].getLocalBounds().height;
         leftUpButtonCornerX = menuButtonShapes[text].getPosition().x;
         leftUpButtonCornerY = menuButtonShapes[text].getPosition().y;
-        std::cout<<text<<": "<<buttonWidth<<','<<buttonHeight<<std::endl;
-        menu[text].setPosition(leftUpButtonCornerX+(buttonWidth-textWidth)*0.5, leftUpButtonCornerY+(buttonHeight-textHeight)*0.5);
+//        std::cout<<text<<": "<<buttonWidth<<','<<buttonHeight<<std::endl;
+        menuText[text].setPosition(leftUpButtonCornerX + (buttonWidth - textWidth) * 0.5, leftUpButtonCornerY + (buttonHeight - textHeight) * 0.5);
     }
 }
 
@@ -93,7 +93,7 @@ void snakeMenu::drawMenu(sf::RenderWindow &window) const {
     for (sf::RectangleShape const & button : menuButtonShapes) {
         window.draw(button);
     }
-    for (sf::Text const & button : menu) {
+    for (sf::Text const & button : menuText) {
         window.draw(button);
     }
 }
@@ -107,7 +107,7 @@ std::string snakeMenu::buttonPressed(int x, int y) const {
         buttonWidth = menuButtonShapes[button].getLocalBounds().width;
         buttonHeight = menuButtonShapes[button].getLocalBounds().height;
         if (x>=buttonX && x<=buttonX+buttonWidth &&
-            y>=buttonY && y<=buttonY+buttonHeight) return menu[button].getString();
+            y>=buttonY && y<=buttonY+buttonHeight) return menuText[button].getString();
     }
     return "NULL";
 }

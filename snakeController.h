@@ -9,19 +9,27 @@
 #include "snakeViewer.h"
 #include "snakeMenu.h"
 
+enum GameDifficulty {EASY, NORMAL, HARD};
+
+
 class snakeController {
     snakeBody & snake;
     snakeViewer & viewer;
     snakeMenu & menu;
+    GameDifficulty Difficulty;
     sf::Clock clock;
     sf::Time moveDelay;
+    int timeToMove;
+    int windowWidth;
+    int windowHeight;
     void keyboard(sf::Event & event);
     void timeMove();
     void changeDirection(speed newDir);
-    void mouse(sf::Event & event);
+    void mouse(sf::Event & event, sf::RenderWindow & window);
 public:
-    snakeController(snakeBody & b, snakeViewer & v, snakeMenu & m);
+    snakeController(snakeBody & b, snakeViewer & v, snakeMenu & m, sf::RenderWindow const & window);
     void play(sf::RenderWindow & window);
+    void createNewGame();
 };
 
 

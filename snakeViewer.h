@@ -7,7 +7,7 @@
 #include "snakeBody.h"
 #include <SFML/Graphics.hpp>
 
-const int snakeBodySize = 50;
+
 
 
 class snakeViewer {
@@ -15,12 +15,16 @@ class snakeViewer {
     sf::RectangleShape snakeHeadShape;
     std::vector<sf::RectangleShape> snakeBodyShape;
     sf::CircleShape fruitShape;
+    int snakeBodySize = 50;
+    int windowWidth;
+    int windowHeight;
     void setupSnakeView();
     void updateSnakeView();
     void setupFruitView();
     void updateFruitView();
 public:
-    explicit snakeViewer(snakeBody & s);
+    explicit snakeViewer(snakeBody & s, sf::RenderWindow const & window);
+    void newSnake();
     void drawGame(sf::RenderWindow & window) const;
     void updateView();
     void addSnakePart();

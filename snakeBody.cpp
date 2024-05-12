@@ -8,8 +8,8 @@
 snakeBody::snakeBody() {
     score = 0;
     snakeSpeed = {0, 0};
-    width = 10;
-    height = 8;
+    boardWidth = 10;
+    boardHeight = 8;
     State = MENU;
 
 
@@ -27,8 +27,8 @@ snakeBody::snakeBody(int width, int height, int snakeLength, GameState startupSt
     score = 0;
     snakeSpeed={0,0};
     State = startupState;
-    this->width = width;
-    this->height = height;
+    boardWidth = width;
+    boardHeight = height;
 
     point setupPosition{};
     int startPlace= snakeLength + 1;
@@ -51,8 +51,8 @@ void snakeBody::placeFruit() {
     if (State!=RUNNING) return;
     std::random_device rd;
     std::default_random_engine randomEngine(rd());
-    std::uniform_int_distribution<int> x(0, width-1);
-    std::uniform_int_distribution<int> y(0, height-1);
+    std::uniform_int_distribution<int> x(0, boardWidth - 1);
+    std::uniform_int_distribution<int> y(0, boardHeight - 1);
 
     do {
         fruitPoint = {x(randomEngine), y(randomEngine)};
@@ -60,8 +60,8 @@ void snakeBody::placeFruit() {
 }
 
 bool snakeBody::isOnMap(point const & item) const {
-    if (item.x >=width || item.x<0) return false;
-    if (item.y >=height || item.y<0) return false;
+    if (item.x >= boardWidth || item.x < 0) return false;
+    if (item.y >= boardHeight || item.y < 0) return false;
     return true;
 }
 
@@ -99,12 +99,12 @@ char snakeBody::isPartOfSnake(point const & lookingPoint) const {
 void snakeBody::debug_display() const {
     point lookingPoint{};
     char field;
-    for (int y=0; y<height; y++) {
+    for (int y=0; y < boardHeight; y++) {
         lookingPoint.y=y;
-        for (int x=0; x<width; x++){
+        for (int x=0; x < boardWidth; x++){
             lookingPoint.x=x;
             field=isPartOfSnake(lookingPoint);
-            if (y == fruitPoint.y && x == fruitPoint.x) field='f';
+            if (point{x,y} == fruitPoint) field='f';
             std::cout<<' '<<field<<' ';
         }
         std::cout<<std::endl;
@@ -126,7 +126,7 @@ bool snakeBody::snakeEating() {
     if (isSnakeCanEat(bodyPosition.front())) {
         score++;
         placeFruit();
-        std::cout<<"Punkty: "<<score<<std::endl;
+//        std::cout<<"Punkty: "<<score<<std::endl;
         return true;
     }
     return false;
@@ -158,6 +158,10 @@ GameState snakeBody::getGameState() const {
 
 void snakeBody::changeGameState(GameState newGameState) {
     State = newGameState;
+}
+
+point snakeBody::getBoardSize() const {
+    return point{boardWidth, boardHeight};
 }
 
 

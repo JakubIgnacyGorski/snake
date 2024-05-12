@@ -5,7 +5,14 @@
 #include "snakeViewer.h"
 #include <iostream>
 
-snakeViewer::snakeViewer(snakeBody &s) : snake(s) {
+snakeViewer::snakeViewer(snakeBody &s, sf::RenderWindow const & window) : snake(s) {
+    windowWidth = window.getSize().x;
+    windowHeight = window.getSize().y;
+    newSnake();
+}
+
+void snakeViewer::newSnake() {
+    snakeBodySize = std::max(windowWidth, windowHeight)/std::max(snake.getBoardSize().x, snake.getBoardSize().y);
     setupSnakeView();
     updateSnakeView();
     setupFruitView();
@@ -13,6 +20,7 @@ snakeViewer::snakeViewer(snakeBody &s) : snake(s) {
 }
 
 void snakeViewer::setupSnakeView() {
+    snakeBodyShape.clear();
     snakeHeadShape.setFillColor(sf::Color::Green);
     snakeHeadShape.setSize(sf::Vector2f(snakeBodySize,snakeBodySize));
     int snakeLength=snake.getSnakeLength();
@@ -28,8 +36,8 @@ void snakeViewer::updateSnakeView() {
     std::list<point>snakePosition = snake.snakePosition();
     auto snakeHeadPointer = snakePosition.begin();
 
-    int tmpSnakePositionX = snakeHeadPointer->x * (snakeBodySize+10);
-    int tmpSnakePositionY = snakeHeadPointer->y * (snakeBodySize+10);
+    int tmpSnakePositionX = snakeHeadPointer->x * (snakeBodySize);
+    int tmpSnakePositionY = snakeHeadPointer->y * (snakeBodySize);
 
     snakeHeadShape.setPosition(tmpSnakePositionX, tmpSnakePositionY);
 //    std::cout<<"-1: "<<tmpSnakePositionX<<','<<tmpSnakePositionY<<std::endl;
@@ -37,8 +45,8 @@ void snakeViewer::updateSnakeView() {
 
     for (int bodyPart=0; bodyPart< static_cast<int>(snakeBodyShape.size()); bodyPart++){
         snakeHeadPointer++;
-        tmpSnakePositionX = snakeHeadPointer->x * (snakeBodySize+10);
-        tmpSnakePositionY = snakeHeadPointer->y * (snakeBodySize+10);
+        tmpSnakePositionX = snakeHeadPointer->x * (snakeBodySize);
+        tmpSnakePositionY = snakeHeadPointer->y * (snakeBodySize);
         snakeBodyShape[bodyPart].setPosition(tmpSnakePositionX, tmpSnakePositionY);
 //        std::cout<<bodyPart<<": "<<tmpSnakePositionX<<','<<tmpSnakePositionY<<std::endl;
     }
@@ -47,13 +55,13 @@ void snakeViewer::updateSnakeView() {
 
 void snakeViewer::setupFruitView() {
     fruitShape.setFillColor(sf::Color::Red);
-    fruitShape.setRadius(25);
+    fruitShape.setRadius(snakeBodySize*0.5);
 }
 
 void snakeViewer::updateFruitView() {
     point fruit=snake.getFruitPoint();
-    int tmpFruitPositionX = fruit.x *(snakeBodySize+10);
-    int tmpFruitPositionY = fruit.y *(snakeBodySize+10);
+    int tmpFruitPositionX = fruit.x *(snakeBodySize);
+    int tmpFruitPositionY = fruit.y *(snakeBodySize);
 
     fruitShape.setPosition(tmpFruitPositionX, tmpFruitPositionY);
 
@@ -84,5 +92,7 @@ void snakeViewer::addSnakePart() {
     snakeBodyShape.push_back(tmpBody);
     updateSnakeView();
 }
+
+
 
 

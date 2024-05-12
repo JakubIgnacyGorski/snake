@@ -7,14 +7,9 @@
 #include "SFML/Graphics.hpp"
 
 class snakeMenu {
-//    sf::RectangleShape easyButtonShape;
-//    sf::RectangleShape normalButtonShape;
-//    sf::RectangleShape hardButtonShape;
-//    sf::RectangleShape scoreboardShape;
-//    sf::RectangleShape exitButton;
     sf::RectangleShape menuButtonShapes[5];
     sf::Font Font;
-    sf::Text menu[5];
+    sf::Text menuText[5];
     int windowWidth;
     int windowHeight;
     void setupButtons();
