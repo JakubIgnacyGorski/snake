@@ -17,12 +17,14 @@ struct playerScoreboard {
 class snakeScoreboard {
     std::array<playerScoreboard, scoreboardSize> player;
     unsigned short int scoreboardCount;
-    std::string const saveFileName="scoreboard.save";
+    const std::string saveFileName="scoreboard.save";
     void sortPlayerScoreboard();
     bool saveScoreboardToFile();
+    bool compareName(const std::string & playerName, unsigned int playerScore);
+    bool compareScore(const std::string &playerName, unsigned int playerScore);
 public:
     snakeScoreboard();
-    void addPlayerToScoreboard(const std::string & playerName, int unsigned playerScore);
+    void addPlayerToScoreboard(const std::string & playerName, unsigned int playerScore);
 };
 
 
