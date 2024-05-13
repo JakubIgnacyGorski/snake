@@ -65,12 +65,10 @@ bool snakeScoreboard::compareName(const std::string &playerName, const unsigned 
 }
 
 bool snakeScoreboard::compareScore(const std::string &playerName, const unsigned int playerScore) {
-    for (int playerCount=0; playerCount<scoreboardCount; playerCount++) {
-        if (playerScore > player[playerCount].score) {
-            player[scoreboardCount-1].name = playerName;
-            player[scoreboardCount-1].score = playerScore;
-            return true;
-        }
+    if (playerScore > player[scoreboardCount-1].score) {
+        player[scoreboardCount-1].name = playerName;
+        player[scoreboardCount-1].score = playerScore;
+        return true;
     }
     return false;
 }
