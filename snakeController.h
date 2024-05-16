@@ -25,7 +25,7 @@ class snakeController {
     void timeMove();
     void changeDirection(speed newDir);
     void mouse(sf::Event & event, sf::RenderWindow & window);
-    void createNewGame(const sf::RenderWindow & window);
+    void createNewGame(const sf::RenderWindow & window, const GameState State);
 public:
     snakeController(snakeBody & b, snakeViewer & v, snakeMenu & m, snakeScoreboard & s);
     void play(sf::RenderWindow & window);

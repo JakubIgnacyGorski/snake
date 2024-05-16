@@ -47,7 +47,7 @@ public:
     speed getSnakeSpeed() const;
     void setSnakeSpeed(speed newSpeed);
     GameState getGameState() const;
-    void changeGameState(GameState newGameState);
+//    void changeGameState(GameState newGameState); prawdopodobnie niepotrzebna
     point getBoardSize() const;
 };
 

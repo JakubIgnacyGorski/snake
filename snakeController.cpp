@@ -45,7 +45,7 @@ void snakeController::timeMove() {
 }
 
 void snakeController::changeDirection(speed newDir) {
-    speed reversDir {-newDir.Vx, -newDir.Vy};
+    const speed reversDir {-newDir.Vx, -newDir.Vy};
     speed snakeSpeed = snake.getSnakeSpeed();
     if (snakeSpeed == newDir || snake.getSnakeSpeed()==reversDir) return;
     if (snakeSpeed == speed{0,0} && newDir.Vx<0) return;
@@ -63,19 +63,19 @@ void snakeController::mouse(sf::Event &event, sf::RenderWindow & window) {
         window.close();
     } else if (button == "EASY") {
         Difficulty = EASY;
-        createNewGame(window);
+        createNewGame(window, RUNNING);
     } else if (button == "NORMAL") {
         Difficulty = NORMAL;
-        createNewGame(window);
+        createNewGame(window, RUNNING);
     } else if (button == "HARD") {
         Difficulty = HARD;
-        createNewGame(window);
+        createNewGame(window, RUNNING);
     } else if (button == "SCOREBOARD") {
         std::cout<<"SCOREBOARD"<<std::endl;
     }
 }
 
-void snakeController::createNewGame(const sf::RenderWindow & window) {
+void snakeController::createNewGame(const sf::RenderWindow & window, const GameState State) {
     int width = static_cast<int>(window.getSize().x*0.05);
     int height = static_cast<int>(window.getSize().y*0.05);
     int snakeLength;
@@ -95,7 +95,7 @@ void snakeController::createNewGame(const sf::RenderWindow & window) {
             break;
     }
 
-    snake = snakeBody(width, height, snakeLength, RUNNING);
+    snake = snakeBody(width, height, snakeLength, State);
     viewer.newSnake();
 }
 
@@ -128,6 +128,7 @@ void snakeController::play(sf::RenderWindow & window) {
                 menu.drawMenu(window);
                 break;
             case LOSE:
+                createNewGame(window, MENU);
                 break;
             case SCOREBOARD:
                 break;

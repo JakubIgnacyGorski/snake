@@ -156,9 +156,9 @@ GameState snakeBody::getGameState() const {
     return State;
 }
 
-void snakeBody::changeGameState(GameState newGameState) {
-    State = newGameState;
-}
+//void snakeBody::changeGameState(GameState newGameState) {
+//    State = newGameState;
+//}
 
 point snakeBody::getBoardSize() const {
     return point{boardWidth, boardHeight};

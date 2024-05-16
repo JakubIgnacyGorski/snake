@@ -24,6 +24,7 @@ snakeScoreboard::snakeScoreboard() {
 //        std::cout << "Nazwa: " << player[scoreboardCount].name << " Punkty: " << player[scoreboardCount].score << std::endl;
         scoreboardCount++;
     }
+
     scoreboardFile.close();
     sortPlayerScoreboard();
 
