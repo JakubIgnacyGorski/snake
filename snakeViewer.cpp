@@ -108,8 +108,8 @@ void snakeViewer::drawGame(sf::RenderWindow &window) const {
     window.draw(ScoreText);
     window.draw(Score);
     window.draw(snakeHeadShape);
-    for (int bodyPart=0; bodyPart< static_cast<int>(snakeBodyShape.size()); bodyPart++){
-        window.draw(snakeBodyShape[bodyPart]);
+    for (const sf::RectangleShape & bodyPart : snakeBodyShape) {
+        window.draw(bodyPart);
     }
 
     window.draw(fruitShape);
@@ -120,8 +120,6 @@ void snakeViewer::updateView() {
     updateSnakeView();
     updateFruitView();
     updateScoreCounter();
-//    std::cout<<std::endl;
-//    snake.debug_display();
 }
 
 void snakeViewer::addSnakePart() {
