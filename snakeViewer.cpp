@@ -104,16 +104,16 @@ void snakeViewer::updateScoreCounter() {
 
 void snakeViewer::drawGame(sf::RenderWindow &window) const {
     window.clear(sf::Color(250, 250, 250));
+
     window.draw(background);
     window.draw(ScoreText);
     window.draw(Score);
+    window.draw(fruitShape);
+
     window.draw(snakeHeadShape);
     for (const sf::RectangleShape & bodyPart : snakeBodyShape) {
         window.draw(bodyPart);
     }
-
-    window.draw(fruitShape);
-
 }
 
 void snakeViewer::updateView() {
