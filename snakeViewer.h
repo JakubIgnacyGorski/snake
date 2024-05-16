@@ -30,6 +30,7 @@ class snakeViewer {
     void updateFruitView();
     void setupBackground();
     void setupScoreCounter();
+    void updateScoreCounter();
 public:
     explicit snakeViewer(snakeBody & s, FontManager & f, const sf::RenderWindow & window);
     void newSnake();

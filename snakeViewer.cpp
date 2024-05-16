@@ -4,6 +4,7 @@
 
 #include "snakeViewer.h"
 #include <iostream>
+#include <string>
 
 snakeViewer::snakeViewer(snakeBody &s, FontManager & f, const sf::RenderWindow & window) : snake(s), fontmgr(f) {
     windowWidth = window.getSize().x;
@@ -20,6 +21,7 @@ void snakeViewer::newSnake() {
     updateFruitView();
     setupBackground();
     setupScoreCounter();
+    updateScoreCounter();
 }
 
 void snakeViewer::setupSnakeView() {
@@ -78,22 +80,33 @@ void snakeViewer::setupBackground() {
 }
 
 void snakeViewer::setupScoreCounter() {
+    const unsigned int textSize = offsetY*0.3;
     ScoreText.setFont(fontmgr.getFont());
-    ScoreText.setCharacterSize(offsetY*0.5);
+    ScoreText.setCharacterSize(textSize);
     ScoreText.setFillColor(sf::Color::Black);
     ScoreText.setString("Score:");
 
-    int test = snake.getScore();
-
     Score.setFont(fontmgr.getFont());
-    Score.setCharacterSize(offsetY*0.5);
+    Score.setCharacterSize(textSize);
     Score.setFillColor(sf::Color::Black);
     Score.setString("00");
+
+    const float XPosition = static_cast<float>((windowWidth - ScoreText.getLocalBounds().width - Score.getLocalBounds().width) * 0.5);
+    const float YPosition = static_cast<float>((offsetY-ScoreText.getLocalBounds().height)*0.5);
+
+    ScoreText.setPosition(XPosition, YPosition);
+    Score.setPosition(XPosition + ScoreText.getLocalBounds().width + offsetY * 0.1, YPosition);
+}
+
+void snakeViewer::updateScoreCounter() {
+    Score.setString(std::to_string(snake.getScore()));
 }
 
 void snakeViewer::drawGame(sf::RenderWindow &window) const {
     window.clear(sf::Color(250, 250, 250));
     window.draw(background);
+    window.draw(ScoreText);
+    window.draw(Score);
     window.draw(snakeHeadShape);
     for (int bodyPart=0; bodyPart< static_cast<int>(snakeBodyShape.size()); bodyPart++){
         window.draw(snakeBodyShape[bodyPart]);
@@ -106,6 +119,7 @@ void snakeViewer::drawGame(sf::RenderWindow &window) const {
 void snakeViewer::updateView() {
     updateSnakeView();
     updateFruitView();
+    updateScoreCounter();
 //    std::cout<<std::endl;
 //    snake.debug_display();
 }
