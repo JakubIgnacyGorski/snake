@@ -94,9 +94,9 @@ void snakeMenu::drawMenu(sf::RenderWindow &window) const {
     }
 }
 
-std::string snakeMenu::buttonPressed(int x, int y) const {
-    int buttonX, buttonY;
-    int buttonWidth, buttonHeight;
+std::string snakeMenu::buttonPressed(const float x, const float y) const {
+    float buttonX, buttonY;
+    float buttonWidth, buttonHeight;
     for (int button=0; button<5; button++) {
         buttonX = menuButtonShapes[button].getPosition().x;
         buttonY = menuButtonShapes[button].getPosition().y;

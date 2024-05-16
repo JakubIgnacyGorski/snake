@@ -20,7 +20,7 @@ class snakeMenu {
 public:
     explicit snakeMenu(sf::RenderWindow & window, FontManager & f);
     void drawMenu(sf::RenderWindow & window) const;
-    std::string buttonPressed(int x, int y) const;
+    std::string buttonPressed(const float x, const float y) const;
 };
 
 
