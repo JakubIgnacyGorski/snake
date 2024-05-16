@@ -31,6 +31,8 @@ add_executable(Snake-SFML main-sfml.cpp
         snakeMenu.h
         snakeScoreboard.cpp
         snakeScoreboard.h
+        FontManager.cpp
+        FontManager.h
 )
 
 if (TARGET Snake-SFML) # Źródło: https://cmake.org/cmake/help/latest/command/if.html

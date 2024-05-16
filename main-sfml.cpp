@@ -3,7 +3,7 @@
 #include "snakeViewer.h"
 #include "snakeController.h"
 #include "snakeScoreboard.h"
-
+#include "FontManager.h"
 
 int main() {
 
@@ -11,10 +11,10 @@ int main() {
 
     window.setVerticalSyncEnabled(false);
     window.setFramerateLimit(30);
-
+    FontManager font;
     snakeBody body;
-    snakeViewer viewer(body, window);
-    snakeMenu menu{window};
+    snakeViewer viewer(body, font, window);
+    snakeMenu menu{window, font};
     snakeScoreboard scoreboard;
     snakeController ctr(body, viewer, menu,scoreboard);
 

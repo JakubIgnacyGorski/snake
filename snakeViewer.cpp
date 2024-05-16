@@ -5,9 +5,10 @@
 #include "snakeViewer.h"
 #include <iostream>
 
-snakeViewer::snakeViewer(snakeBody &s, sf::RenderWindow const & window) : snake(s) {
+snakeViewer::snakeViewer(snakeBody &s, FontManager & f, const sf::RenderWindow & window) : snake(s), fontmgr(f) {
     windowWidth = window.getSize().x;
     windowHeight = window.getSize().y;
+    offsetY=windowHeight*0.05;
     newSnake();
 }
 
@@ -17,6 +18,7 @@ void snakeViewer::newSnake() {
     updateSnakeView();
     setupFruitView();
     updateFruitView();
+    setupScoreCounter();
 }
 
 void snakeViewer::setupSnakeView() {
@@ -68,6 +70,10 @@ void snakeViewer::updateFruitView() {
 
 }
 
+void snakeViewer::setupScoreCounter() {
+
+}
+
 void snakeViewer::drawGame(sf::RenderWindow &window) const {
     window.clear(sf::Color(250, 250, 250));
     window.draw(snakeHeadShape);
@@ -92,6 +98,10 @@ void snakeViewer::addSnakePart() {
     tmpBody.setSize(sf::Vector2f(snakeBodySize, snakeBodySize));
     snakeBodyShape.push_back(tmpBody);
     updateSnakeView();
+}
+
+int snakeViewer::getOffsetY() const {
+    return offsetY;
 }
 
 

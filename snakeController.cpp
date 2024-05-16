@@ -77,7 +77,7 @@ void snakeController::mouse(sf::Event &event, sf::RenderWindow & window) {
 
 void snakeController::createNewGame(const sf::RenderWindow & window, const GameState State) {
     int width = static_cast<int>(window.getSize().x*0.05);
-    int height = static_cast<int>(window.getSize().y*0.05);
+    int height = static_cast<int>(window.getSize().y*0.05-viewer.getOffsetY());
     int snakeLength;
 
     switch (Difficulty) {
