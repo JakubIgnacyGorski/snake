@@ -164,6 +164,10 @@ point snakeBody::getBoardSize() const {
     return point{boardWidth, boardHeight};
 }
 
+unsigned int snakeBody::getScore() const {
+    return score;
+}
+
 
 
 

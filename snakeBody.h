@@ -49,6 +49,7 @@ public:
     GameState getGameState() const;
 //    void changeGameState(GameState newGameState); prawdopodobnie niepotrzebna
     point getBoardSize() const;
+    unsigned int getScore() const;
 };
 
 

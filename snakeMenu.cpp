@@ -59,7 +59,7 @@ void snakeMenu::updateButtons() {
 }
 
 void snakeMenu::setupText() {
-    std::string const setstring[] = { "EASY", "NORMAL", "HARD", "SCOREBOARD", "EXIT"};
+    const std::string setstring[] = { "EASY", "NORMAL", "HARD", "SCOREBOARD", "EXIT"};
     for (int text=0; text<5; text++) {
         menuText[text].setFont(fontmgr.getFont());
         menuText[text].setCharacterSize(menuButtonShapes[text].getSize().y*0.3);
