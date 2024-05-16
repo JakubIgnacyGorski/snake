@@ -5,10 +5,11 @@
 #ifndef SNAKE_SNAKEMENU_H
 #define SNAKE_SNAKEMENU_H
 #include "SFML/Graphics.hpp"
+#include "FontManager.h"
 
 class snakeMenu {
     sf::RectangleShape menuButtonShapes[5];
-    sf::Font Font;
+    FontManager & fontmgr;
     sf::Text menuText[5];
     int windowWidth;
     int windowHeight;
@@ -17,7 +18,7 @@ class snakeMenu {
     void setupText();
     void updateText();
 public:
-    explicit snakeMenu(sf::RenderWindow & window);
+    explicit snakeMenu(sf::RenderWindow & window, FontManager & f);
     void drawMenu(sf::RenderWindow & window) const;
     std::string buttonPressed(int x, int y) const;
 };

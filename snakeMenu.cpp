@@ -1,19 +1,15 @@
 //
 // Created by jakub on 11.05.24.
 //
-
-#include "snakeMenu.h"
 #include <iostream>
 #include <cstring>
+#include "snakeMenu.h"
+#include "FontManager.h"
 
-snakeMenu::snakeMenu(sf::RenderWindow &window) {
+snakeMenu::snakeMenu(sf::RenderWindow &window, FontManager & f) : fontmgr(f) {
     windowWidth = window.getSize().x;
     windowHeight = window.getSize().y;
 
-    if (!Font.loadFromFile("fonts/sd-snatcher.ttf")) {
-        std::cerr <<strerror(errno) << std::endl;
-        abort();
-    }
 
     setupButtons();
     setupText();
@@ -65,7 +61,7 @@ void snakeMenu::updateButtons() {
 void snakeMenu::setupText() {
     std::string const setstring[] = { "EASY", "NORMAL", "HARD", "SCOREBOARD", "EXIT"};
     for (int text=0; text<5; text++) {
-        menuText[text].setFont(Font);
+        menuText[text].setFont(fontmgr.getFont());
         menuText[text].setCharacterSize(menuButtonShapes[text].getSize().y*0.3);
         menuText[text].setFillColor(sf::Color::Black);
         menuText[text].setString(setstring[text]);
