@@ -83,15 +83,15 @@ void snakeController::createNewGame(const sf::RenderWindow & window, const GameS
     switch (Difficulty) {
         case EASY:
             snakeLength = static_cast<int>(width*0.3);
-            timeToMove = 150;
+            timeToMove = 125;
             break;
         case NORMAL:
             snakeLength = static_cast<int>(width*0.5);
-            timeToMove = 100;
+            timeToMove = 75;
             break;
         case HARD:
             snakeLength = static_cast<int>(width*0.7);
-            timeToMove = 50;
+            timeToMove = 25;
             break;
     }
 
