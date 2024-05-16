@@ -19,8 +19,6 @@ int main() {
     snakeController ctr(body, viewer, menu,scoreboard);
 
     ctr.play(window);
-
-
-
+    
     return 0;
 }

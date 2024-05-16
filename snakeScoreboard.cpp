@@ -13,7 +13,10 @@ snakeScoreboard::snakeScoreboard() {
     scoreboardCount=0;
     scoreboardFile.open(saveFileName);
 
-    if (!scoreboardFile.is_open()) abort(); //Dodać komunikat błędu
+    if (!scoreboardFile.is_open()) {
+        std::cerr << "Scoreboard file doesn't exist" << std::endl;
+        return;
+    }
 
     while (std::getline(scoreboardFile, line) && scoreboardCount<scoreboardSize){
         std::istringstream iss(line); //źródło: https://cplusplus.com/reference/sstream/istringstream/istringstream/
@@ -41,7 +44,10 @@ bool snakeScoreboard::saveScoreboardToFile() {
     std::ofstream scoreboardFile;
     scoreboardFile.open(saveFileName, std::ios::trunc);
 
-    if (!scoreboardFile.is_open()) return false;
+    if (!scoreboardFile.is_open()) {
+        std::cerr << "Can't save scoreboard" << std::endl;
+        abort();
+    }
 
     for (int lineCount=0; lineCount<scoreboardCount; lineCount++) {
         scoreboardFile << player[lineCount].name << ' ' <<player[lineCount].score<<std::endl;
@@ -74,14 +80,14 @@ bool snakeScoreboard::compareScore(const std::string &playerName, const unsigned
 }
 
 void snakeScoreboard::addPlayerToScoreboard(const std::string &playerName, const unsigned int playerScore) {
-    if (scoreboardCount==scoreboardSize) {
-        if (!compareName(playerName, playerScore)) {
+    if (!compareName(playerName, playerScore)) {
+        if (scoreboardCount==scoreboardSize) {
             compareScore(playerName, playerScore);
+        } else {
+            player[scoreboardCount].name=playerName;
+            player[scoreboardCount].score=playerScore;
+            scoreboardCount++;
         }
-    } else {
-        player[scoreboardCount].name=playerName;
-        player[scoreboardCount].score=playerScore;
-        scoreboardCount++;
     }
 
     sortPlayerScoreboard();
