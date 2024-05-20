@@ -7,7 +7,7 @@
 #include <iostream>
 #include <array>
 
-const unsigned int scoreboardSize = 10;
+constexpr unsigned int scoreboardSize = 10;
 
 struct playerScoreboard {
     std::string name;
