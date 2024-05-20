@@ -70,7 +70,7 @@ bool snakeBody::snakeMove(speed const & newSnakeSpeed) {
     point newHead = {bodyPosition.front().x+newSnakeSpeed.Vx,
                      bodyPosition.front().y+newSnakeSpeed.Vy};
     if (collisionDetection(newHead)) {
-        State=LOSE;
+        State=SCOREBOARD_WRITE;
         return false;
     }
 

@@ -7,7 +7,7 @@
 #include <list>
 #include <vector>
 
-enum GameState {RUNNING, LOSE, SCOREBOARD, MENU};
+enum GameState {RUNNING, SCOREBOARD_WRITE, SCOREBOARD_VIEW, MENU};
 
 struct point {
     int x,y;

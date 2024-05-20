@@ -5,10 +5,12 @@
 #ifndef SNAKE_SNAKESCOREBOARDVIEWER_H
 #define SNAKE_SNAKESCOREBOARDVIEWER_H
 #include "snakeScoreboard.h"
+#include "snakeBody.h"
 #include "FontManager.h"
 #include <SFML/Graphics.hpp>
 
 class snakeScoreboardViewer {
+    snakeBody & snake;
     FontManager & fontmgr;
     snakeScoreboard & scoreboard;
     int windowWidth;
@@ -16,11 +18,17 @@ class snakeScoreboardViewer {
     sf::Text ScoreboardTitle;
     sf::Text ScoreboardText[scoreboardSize];
 
-    void setupText();
-    void updateText();
+    sf::Text ScoreTitle;
+    sf::Text playerScore;
+    sf::Text playerNick;
+
+    void setupViewText();
+    void updateViewText();
+    void setupWriteText();
 public:
-    snakeScoreboardViewer(FontManager & f, snakeScoreboard & s, const sf::RenderWindow & window);
+    snakeScoreboardViewer(snakeBody & s, FontManager & f, snakeScoreboard & scb, const sf::RenderWindow & window);
     void drawScoreboard(sf::RenderWindow & window) const;
+    void drawScoreboardSave(sf::RenderWindow & window) const;
 };
 
 

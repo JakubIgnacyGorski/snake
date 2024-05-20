@@ -73,7 +73,7 @@ void snakeController::mouse(sf::Event &event, sf::RenderWindow & window) {
         Difficulty = HARD;
         createNewGame(window, RUNNING);
     } else if (button == "SCOREBOARD") {
-        createNewGame(window, SCOREBOARD);
+        createNewGame(window, SCOREBOARD_VIEW);
     }
 
 }
@@ -130,10 +130,10 @@ void snakeController::play(sf::RenderWindow & window) {
             case MENU:
                 menu.drawMenu(window);
                 break;
-            case LOSE:
+            case SCOREBOARD_WRITE:
                 createNewGame(window, MENU);
                 break;
-            case SCOREBOARD:
+            case SCOREBOARD_VIEW:
                 scbViewer.drawScoreboard(window);
                 break;
         }

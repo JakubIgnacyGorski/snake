@@ -4,15 +4,15 @@
 
 #include "snakeScoreboardViewer.h"
 
-snakeScoreboardViewer::snakeScoreboardViewer( FontManager & f, snakeScoreboard & s, const sf::RenderWindow & window ) : fontmgr(f), scoreboard(s){
+snakeScoreboardViewer::snakeScoreboardViewer(snakeBody & s, FontManager & f, snakeScoreboard & scb, const sf::RenderWindow & window ) : snake(s), fontmgr(f), scoreboard(scb){
     windowWidth = window.getSize().x;
     windowHeight = window.getSize().y;
 
-    setupText();
-    updateText();
+    setupViewText();
+    updateViewText();
 }
 
-void snakeScoreboardViewer::setupText() {
+void snakeScoreboardViewer::setupViewText() {
     const unsigned int textSpaceY=windowHeight/(scoreboardSize+4);
 
     ScoreboardTitle.setCharacterSize(textSpaceY*0.8);
@@ -29,7 +29,7 @@ void snakeScoreboardViewer::setupText() {
     }
 }
 
-void snakeScoreboardViewer::updateText() {
+void snakeScoreboardViewer::updateViewText() {
     const unsigned int textSpaceY=windowHeight/(scoreboardSize+4);
     const unsigned int x=(windowWidth-ScoreboardText[0].getCharacterSize()*(5 + playerNickLength + playerScoreLength))*0.5;
     unsigned int y;
@@ -48,8 +48,16 @@ void snakeScoreboardViewer::updateText() {
         ScoreboardText[text].setString(tmpString);
         ScoreboardText[text].setPosition(x, y);
         tmpString.clear();
-//        std::cout<<ScoreboardText[text].getGlobalBounds().left<<", "<<ScoreboardText[text].getGlobalBounds().width<<std::endl;
     }
+}
+
+void snakeScoreboardViewer::setupWriteText() {
+    const unsigned int textSpaceY=windowHeight/(scoreboardSize+4);
+
+    ScoreTitle.setCharacterSize(textSpaceY*0.8);
+    ScoreTitle.setFont(fontmgr.getFont());
+    ScoreTitle.setFillColor(sf::Color::Black);
+    ScoreTitle.setString("Your score was: ");
 }
 
 void snakeScoreboardViewer::drawScoreboard(sf::RenderWindow &window) const {
@@ -58,6 +66,12 @@ void snakeScoreboardViewer::drawScoreboard(sf::RenderWindow &window) const {
     for (const sf::Text & text : ScoreboardText) {
         window.draw(text);
     }
+}
+
+void snakeScoreboardViewer::drawScoreboardSave(sf::RenderWindow &window) const {
+    window.clear(sf::Color(250, 250, 250));
+    window.draw(ScoreTitle);
+    window.draw(playerScore);
 }
 
 
