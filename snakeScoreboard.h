@@ -6,8 +6,13 @@
 #define SNAKE_SNAKESCOREBOARD_H
 #include <iostream>
 #include <array>
+#include <SFML/Graphics.hpp>
+
+#include "FontManager.h"
 
 constexpr unsigned int scoreboardSize = 10;
+constexpr unsigned int playerNickLength = 12;
+constexpr unsigned int playerScoreLength = 9;
 
 struct playerScoreboard {
     std::string name;
@@ -21,10 +26,12 @@ class snakeScoreboard {
     void sortPlayerScoreboard();
     bool saveScoreboardToFile();
     bool compareName(const std::string & playerName, unsigned int playerScore);
-    bool compareScore(const std::string &playerName, unsigned int playerScore);
+    bool compareScore(const std::string & playerName, unsigned int playerScore);
 public:
     snakeScoreboard();
-    void addPlayerToScoreboard(const std::string & playerName, unsigned int playerScore);
+    void addPlayerToScoreboard(std::string & playerName, unsigned int playerScore);
+    int getScoreboardCount() const;
+    playerScoreboard & getPlayerdata(unsigned int playerNumber);
 };
 
 

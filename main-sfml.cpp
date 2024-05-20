@@ -4,10 +4,11 @@
 #include "snakeController.h"
 #include "snakeScoreboard.h"
 #include "FontManager.h"
+#include "snakeScoreboardViewer.h"
 
 int main() {
 
-    sf::RenderWindow window (sf::VideoMode(1000,800), "Snake");
+    sf::RenderWindow window (sf::VideoMode(800,600), "Snake");
 
     window.setVerticalSyncEnabled(false);
     window.setFramerateLimit(30);
@@ -16,7 +17,8 @@ int main() {
     snakeViewer viewer(body, font, window);
     snakeMenu menu{window, font};
     snakeScoreboard scoreboard;
-    snakeController ctr(body, viewer, menu,scoreboard);
+    snakeScoreboardViewer scbviewer(font, scoreboard, window);
+    snakeController ctr(body, viewer, menu,scoreboard, scbviewer);
 
     ctr.play(window);
 

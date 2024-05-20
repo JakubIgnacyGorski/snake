@@ -5,8 +5,9 @@
 #include "snakeController.h"
 #include <iostream>
 
-snakeController::snakeController(snakeBody &b, snakeViewer &v, snakeMenu &m,snakeScoreboard &s) : snake(b), viewer(v), menu(m), scoreboard(s){
+snakeController::snakeController(snakeBody &b, snakeViewer &v, snakeMenu &m,snakeScoreboard &s, snakeScoreboardViewer & scb) : snake(b), viewer(v), menu(m), scoreboard(s), scbViewer(scb) {
     timeToMove = 200;
+    Difficulty=NORMAL;
 }
 
 void snakeController::keyboard(sf::Event &event) {
@@ -56,6 +57,7 @@ void snakeController::changeDirection(speed newDir) {
 
 void snakeController::mouse(sf::Event &event, sf::RenderWindow & window) {
     if (event.mouseButton.button != sf::Mouse::Button::Left) return;
+    if (snake.getGameState() != MENU) return;
 
     std::string button = menu.buttonPressed(event.mouseButton.x, event.mouseButton.y);
 
@@ -71,8 +73,9 @@ void snakeController::mouse(sf::Event &event, sf::RenderWindow & window) {
         Difficulty = HARD;
         createNewGame(window, RUNNING);
     } else if (button == "SCOREBOARD") {
-        std::cout<<"SCOREBOARD"<<std::endl;
+        createNewGame(window, SCOREBOARD);
     }
+
 }
 
 void snakeController::createNewGame(const sf::RenderWindow & window, const GameState State) {
@@ -131,6 +134,7 @@ void snakeController::play(sf::RenderWindow & window) {
                 createNewGame(window, MENU);
                 break;
             case SCOREBOARD:
+                scbViewer.drawScoreboard(window);
                 break;
         }
         window.display();
