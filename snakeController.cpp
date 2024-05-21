@@ -104,8 +104,9 @@ void snakeController::createNewGame(const sf::RenderWindow & window, const GameS
 
 
 void snakeController::play(sf::RenderWindow & window) {
+    sf::Event event{};
+    GameState previousState=snake.getGameState();
     while (window.isOpen()) {
-        sf::Event event{};
         while(window.pollEvent(event)){
             switch (event.type) {
                 case sf::Event::Closed:
@@ -126,15 +127,20 @@ void snakeController::play(sf::RenderWindow & window) {
             case RUNNING:
                 timeMove();
                 viewer.drawGame(window);
+                previousState=RUNNING;
                 break;
             case MENU:
                 menu.drawMenu(window);
+                previousState=MENU;
                 break;
             case SCOREBOARD_WRITE:
-                createNewGame(window, MENU);
+                if (previousState!=SCOREBOARD_WRITE) scbViewer.updateWriteText();
+                scbViewer.drawScoreboardSave(window);
+                previousState=SCOREBOARD_WRITE;
                 break;
             case SCOREBOARD_VIEW:
                 scbViewer.drawScoreboard(window);
+                previousState=SCOREBOARD_VIEW;
                 break;
         }
         window.display();

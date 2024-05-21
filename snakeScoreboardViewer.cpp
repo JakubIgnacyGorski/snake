@@ -7,14 +7,14 @@
 snakeScoreboardViewer::snakeScoreboardViewer(snakeBody & s, FontManager & f, snakeScoreboard & scb, const sf::RenderWindow & window ) : snake(s), fontmgr(f), scoreboard(scb){
     windowWidth = window.getSize().x;
     windowHeight = window.getSize().y;
+    textSpaceY=windowHeight/(scoreboardSize+4);
 
     setupViewText();
     updateViewText();
+    setupWriteText();
 }
 
 void snakeScoreboardViewer::setupViewText() {
-    const unsigned int textSpaceY=windowHeight/(scoreboardSize+4);
-
     ScoreboardTitle.setCharacterSize(textSpaceY*0.8);
     ScoreboardTitle.setFont(fontmgr.getFont());
     ScoreboardTitle.setFillColor(sf::Color::Black);
@@ -30,7 +30,6 @@ void snakeScoreboardViewer::setupViewText() {
 }
 
 void snakeScoreboardViewer::updateViewText() {
-    const unsigned int textSpaceY=windowHeight/(scoreboardSize+4);
     const unsigned int x=(windowWidth-ScoreboardText[0].getCharacterSize()*(5 + playerNickLength + playerScoreLength))*0.5;
     unsigned int y;
     std::string tmpString;
@@ -40,7 +39,7 @@ void snakeScoreboardViewer::updateViewText() {
         tmpString.append(". ");                                                 // kropka od numeracji
         tmpString.append(scoreboard.getPlayerdata(text).name);
         while (tmpString.size() < 5 + playerNickLength) tmpString.append(".");  // kropki po nazwie gracza
-        if (text == 9) tmpString.pop_back();                                       // jeśli to jest 10 usuń 1 kropkę (ponieważ 1 == dwie spacje)
+        if (text == 9) tmpString.pop_back();                                       // jeśli to jest 10 osoba usuń 1 kropkę (ponieważ 1 == dwie spacje)
         tmpString.append(" ");                                                  // spacja po kropkach
         tmpString.append(std::to_string(scoreboard.getPlayerdata(text).score));
 
@@ -52,12 +51,9 @@ void snakeScoreboardViewer::updateViewText() {
 }
 
 void snakeScoreboardViewer::setupWriteText() {
-    const unsigned int textSpaceY=windowHeight/(scoreboardSize+4);
-
     ScoreTitle.setCharacterSize(textSpaceY*0.8);
     ScoreTitle.setFont(fontmgr.getFont());
     ScoreTitle.setFillColor(sf::Color::Black);
-    ScoreTitle.setString("Your score was: ");
 }
 
 void snakeScoreboardViewer::drawScoreboard(sf::RenderWindow &window) const {
@@ -71,7 +67,12 @@ void snakeScoreboardViewer::drawScoreboard(sf::RenderWindow &window) const {
 void snakeScoreboardViewer::drawScoreboardSave(sf::RenderWindow &window) const {
     window.clear(sf::Color(250, 250, 250));
     window.draw(ScoreTitle);
-    window.draw(playerScore);
 }
 
+void snakeScoreboardViewer::updateWriteText() {
+    std::string tmpString="Your score was: ";
+    tmpString.append(std::to_string(snake.getScore()));
 
+    ScoreTitle.setString(tmpString);
+    ScoreTitle.setPosition(50,50);
+}

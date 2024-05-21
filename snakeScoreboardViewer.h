@@ -15,20 +15,22 @@ class snakeScoreboardViewer {
     snakeScoreboard & scoreboard;
     int windowWidth;
     int windowHeight;
+    unsigned int textSpaceY;
     sf::Text ScoreboardTitle;
     sf::Text ScoreboardText[scoreboardSize];
 
     sf::Text ScoreTitle;
-    sf::Text playerScore;
     sf::Text playerNick;
 
     void setupViewText();
     void updateViewText();
     void setupWriteText();
+
 public:
     snakeScoreboardViewer(snakeBody & s, FontManager & f, snakeScoreboard & scb, const sf::RenderWindow & window);
     void drawScoreboard(sf::RenderWindow & window) const;
     void drawScoreboardSave(sf::RenderWindow & window) const;
+    void updateWriteText();
 };
 
 
