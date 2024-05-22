@@ -10,7 +10,7 @@ snakeController::snakeController(snakeBody &b, snakeViewer &v, snakeMenu &m,snak
     Difficulty=NORMAL;
 }
 
-void snakeController::keyboard(sf::Event &event) {
+void snakeController::keyboardGame(sf::Event &event) {
     switch (event.key.code) {
         case (sf::Keyboard::Key::Right):
             changeDirection(speed{1, 0});
@@ -56,8 +56,11 @@ void snakeController::changeDirection(speed newDir) {
 }
 
 void snakeController::mouse(sf::Event &event, sf::RenderWindow & window) {
+    if (snake.getGameState()==SCOREBOARD_VIEW) {
+        createNewGame(window, MENU);
+        return;
+    }
     if (event.mouseButton.button != sf::Mouse::Button::Left) return;
-    if (snake.getGameState() != MENU) return;
 
     std::string button = menu.buttonPressed(event.mouseButton.x, event.mouseButton.y);
 
@@ -113,10 +116,18 @@ void snakeController::play(sf::RenderWindow & window) {
                     window.close();
                     break;
                 case sf::Event::KeyPressed:
-                    keyboard(event);
+                    if (snake.getGameState() == RUNNING)
+                        keyboardGame(event);
                     break;
                 case sf::Event::MouseButtonPressed:
-                    mouse(event, window);
+                    if (snake.getGameState() == MENU || snake.getGameState() == SCOREBOARD_VIEW)
+                        mouse(event, window);
+                    break;
+                case sf::Event::TextEntered:
+                    if (snake.getGameState() == SCOREBOARD_WRITE) {
+                        if (scbViewer.inputText(event))
+                            createNewGame(window, SCOREBOARD_VIEW);
+                    }
                     break;
                 default:
                     break;
@@ -139,6 +150,7 @@ void snakeController::play(sf::RenderWindow & window) {
                 previousState=SCOREBOARD_WRITE;
                 break;
             case SCOREBOARD_VIEW:
+                if (previousState!=SCOREBOARD_VIEW) scbViewer.updateViewText();
                 scbViewer.drawScoreboard(window);
                 previousState=SCOREBOARD_VIEW;
                 break;

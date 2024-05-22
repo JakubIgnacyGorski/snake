@@ -29,7 +29,7 @@ class snakeScoreboard {
     bool compareScore(const std::string & playerName, unsigned int playerScore);
 public:
     snakeScoreboard();
-    void addPlayerToScoreboard(std::string & playerName, unsigned int playerScore);
+    void addPlayerToScoreboard(std::string playerName, unsigned int playerScore);
     int getScoreboardCount() const;
     playerScoreboard & getPlayerdata(unsigned int playerNumber);
 };

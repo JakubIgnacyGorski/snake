@@ -23,7 +23,7 @@ class snakeController {
     sf::Clock clock;
     sf::Time moveDelay;
     int timeToMove;
-    void keyboard(sf::Event & event);
+    void keyboardGame(sf::Event & event);
     void timeMove();
     void changeDirection(speed newDir);
     void mouse(sf::Event & event, sf::RenderWindow & window);

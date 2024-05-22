@@ -23,14 +23,15 @@ class snakeScoreboardViewer {
     sf::Text playerNick;
 
     void setupViewText();
-    void updateViewText();
     void setupWriteText();
 
 public:
     snakeScoreboardViewer(snakeBody & s, FontManager & f, snakeScoreboard & scb, const sf::RenderWindow & window);
     void drawScoreboard(sf::RenderWindow & window) const;
     void drawScoreboardSave(sf::RenderWindow & window) const;
+    void updateViewText();
     void updateWriteText();
+    bool inputText(sf::Event & event);
 };
 
 

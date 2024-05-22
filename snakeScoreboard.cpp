@@ -76,7 +76,7 @@ bool snakeScoreboard::compareScore(const std::string &playerName, const unsigned
     return false;
 }
 
-void snakeScoreboard::addPlayerToScoreboard(std::string &playerName, const unsigned int playerScore) {
+void snakeScoreboard::addPlayerToScoreboard(std::string playerName, const unsigned int playerScore) {
     while (playerName.size() > playerNickLength) playerName.pop_back();
     if (!compareName(playerName, playerScore)) {
         if (scoreboardCount==scoreboardSize) {
