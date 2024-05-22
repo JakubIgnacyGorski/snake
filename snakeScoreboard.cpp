@@ -21,7 +21,6 @@ snakeScoreboard::snakeScoreboard(){
     while (std::getline(scoreboardFile, line) && scoreboardCount<scoreboardSize){
         std::istringstream iss(line); //źródło: https://cplusplus.com/reference/sstream/istringstream/istringstream/
         iss >> player[scoreboardCount].name >> player[scoreboardCount].score;
-//        std::cout << "Nazwa: " << player[scoreboardCount].name << " Punkty: " << player[scoreboardCount].score << std::endl;
         scoreboardCount++;
     }
 
