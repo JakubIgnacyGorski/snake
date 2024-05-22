@@ -30,17 +30,24 @@ void snakeScoreboardViewer::setupViewText() {
 }
 
 void snakeScoreboardViewer::setupWriteText() {
-    ScoreTitle.setCharacterSize(textSpaceY*0.8);
+    ScoreTitle.setCharacterSize(textSpaceY*0.7);
     ScoreTitle.setFont(fontmgr.getFont());
     ScoreTitle.setFillColor(sf::Color::Black);
 
-    playerNick.setCharacterSize(textSpaceY*0.6);
+    playerNick.setCharacterSize(textSpaceY*0.5);
     playerNick.setFont(fontmgr.getFont());
     playerNick.setFillColor(sf::Color::Black);
 
     const unsigned int x=(windowWidth-playerNick.getCharacterSize()*playerNickLength)*0.5;
+    const unsigned int nickYPos=(windowHeight-playerNick.getLocalBounds().height)*0.5;
 
-    playerNick.setPosition(x,(windowHeight+playerNick.getLocalBounds().height)*0.5);
+    playerNick.setPosition(x,nickYPos);
+
+    enterNick.setCharacterSize(textSpaceY*0.6);
+    enterNick.setFont(fontmgr.getFont());
+    enterNick.setFillColor(sf::Color::Black);
+    enterNick.setString("Enter your nickname:");
+    enterNick.setPosition((windowWidth-enterNick.getLocalBounds().width)*0.5, nickYPos-textSpaceY);
 }
 
 void snakeScoreboardViewer::drawScoreboard(sf::RenderWindow &window) const {
@@ -55,6 +62,7 @@ void snakeScoreboardViewer::drawScoreboardSave(sf::RenderWindow &window) const {
     window.clear(sf::Color(250, 250, 250));
     window.draw(ScoreTitle);
     window.draw(playerNick);
+    window.draw(enterNick);
 }
 
 void snakeScoreboardViewer::updateViewText() {
@@ -83,7 +91,7 @@ void snakeScoreboardViewer::updateWriteText() {
     tmpString.append(std::to_string(snake.getScore()));
 
     ScoreTitle.setString(tmpString);
-    ScoreTitle.setPosition(50,50);
+    ScoreTitle.setPosition((windowWidth-ScoreTitle.getLocalBounds().width)*0.5,textSpaceY*0.5);
 
 }
 
@@ -91,9 +99,8 @@ void snakeScoreboardViewer::updateWriteText() {
 // Return true when successfully wrote to file
 bool snakeScoreboardViewer::inputText(sf::Event & event) {
     sf::String input = playerNick.getString();
-    std::cout<<event.text.unicode<<std::endl;
     switch (event.text.unicode) {
-        case 8:
+        case 8:std::cout<<input.operator std::string()<<std::endl;
             if (input.isEmpty()) return false;
             input.erase(input.getSize() - 1, 1);
             break;

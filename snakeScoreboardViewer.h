@@ -16,11 +16,15 @@ class snakeScoreboardViewer {
     int windowWidth;
     int windowHeight;
     unsigned int textSpaceY;
+
+    // Scoreboard View
     sf::Text ScoreboardTitle;
     sf::Text ScoreboardText[scoreboardSize];
 
+    // Scoreboard Write
     sf::Text ScoreTitle;
     sf::Text playerNick;
+    sf::Text enterNick;
 
     void setupViewText();
     void setupWriteText();
