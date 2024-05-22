@@ -118,6 +118,9 @@ void snakeController::play(sf::RenderWindow & window) {
                 case sf::Event::KeyPressed:
                     if (snake.getGameState() == RUNNING)
                         keyboardGame(event);
+                    if (snake.getGameState() == SCOREBOARD_VIEW &&
+                        event.key.code == sf::Keyboard::Key::Enter)
+                        createNewGame(window, MENU);
                     break;
                 case sf::Event::MouseButtonPressed:
                     if (snake.getGameState() == MENU || snake.getGameState() == SCOREBOARD_VIEW)

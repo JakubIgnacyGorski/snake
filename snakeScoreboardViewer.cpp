@@ -96,7 +96,7 @@ void snakeScoreboardViewer::updateWriteText() {
 }
 
 
-// Return true when successfully wrote to file
+// Return true when pressed enter
 bool snakeScoreboardViewer::inputText(sf::Event & event) {
     sf::String input = playerNick.getString();
     switch (event.text.unicode) {
@@ -105,7 +105,7 @@ bool snakeScoreboardViewer::inputText(sf::Event & event) {
             input.erase(input.getSize() - 1, 1);
             break;
         case 13:
-            if (input.isEmpty()) return false;
+            if (input.isEmpty()) return true;
             scoreboard.addPlayerToScoreboard(input.operator std::string(), snake.getScore());
             return true;
         default:
