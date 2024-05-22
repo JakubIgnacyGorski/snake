@@ -98,7 +98,7 @@ int snakeScoreboard::getScoreboardCount() const {
 
 playerScoreboard &snakeScoreboard::getPlayerdata(const unsigned int playerNumber) {
     if ( playerNumber >= scoreboardCount ) {
-        // dodać informacje o powodzie błędu
+        std::cerr <<"Player number higher then"<< scoreboardCount << std::endl;
         abort();
     }
     return player[playerNumber];

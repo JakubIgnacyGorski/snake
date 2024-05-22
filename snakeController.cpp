@@ -38,8 +38,6 @@ void snakeController::timeMove() {
     if (moveDelay.asMilliseconds()<=timeToMove) return;
 
     snake.snakeMove(snakeSpeed);
-//    std::cout<<moveDelay.asMilliseconds()<<": "<<snake.snakePosition().front().x<<','<<snake.snakePosition().front().y<<std::endl;
-//    std::cout<<"Snake speed: "<<snakeSpeed.Vx <<','<< snakeSpeed.Vy<<std::endl;
     if (snake.snakeEating()) viewer.addSnakePart();
     viewer.updateView();
     moveDelay = clock.restart();
