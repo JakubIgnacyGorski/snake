@@ -60,18 +60,23 @@ void snakeMenu::updateButtons() {
 
 void snakeMenu::setupText() {
     const std::string setstring[] = { "EASY", "NORMAL", "HARD", "SCOREBOARD", "EXIT"};
+    float textSize,buttonSize;
     for (int text=0; text<5; text++) {
         menuText[text].setFont(fontmgr.getFont());
-        menuText[text].setCharacterSize(menuButtonShapes[text].getSize().y*0.3);
         menuText[text].setFillColor(sf::Color::Black);
         menuText[text].setString(setstring[text]);
+        menuText[text].setCharacterSize(menuButtonShapes[text].getSize().y*0.3);
+        textSize = menuText[text].getLocalBounds().width;
+        buttonSize = menuButtonShapes[text].getSize().x;
+        if (textSize > buttonSize) {
+            menuText[text].setCharacterSize(menuText[text].getCharacterSize()*(buttonSize / textSize));
+        }
     }
 
     welcomeText.setFont(fontmgr.getFont());
     welcomeText.setCharacterSize(std::min(windowWidth, windowHeight)*0.15);
     welcomeText.setFillColor(sf::Color::Black);
     welcomeText.setString("SNAKE");
-    welcomeText.setPosition((windowWidth-welcomeText.getLocalBounds().width)*0.5, (menuButtonShapes[1].getGlobalBounds().top-welcomeText.getLocalBounds().height)*0.5);
 }
 
 void snakeMenu::updateText() {
@@ -88,6 +93,8 @@ void snakeMenu::updateText() {
 //        std::cout<<text<<": "<<buttonWidth<<','<<buttonHeight<<std::endl;
         menuText[text].setPosition(leftUpButtonCornerX + (buttonWidth - textWidth) * 0.5, leftUpButtonCornerY + (buttonHeight - textHeight) * 0.5);
     }
+
+    welcomeText.setPosition((windowWidth-welcomeText.getLocalBounds().width)*0.5, (menuButtonShapes[1].getGlobalBounds().top-welcomeText.getLocalBounds().height)*0.5);
 }
 
 void snakeMenu::drawMenu(sf::RenderWindow &window) const {

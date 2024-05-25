@@ -15,7 +15,7 @@ class snakeScoreboardViewer {
     snakeScoreboard & scoreboard;
     int windowWidth;
     int windowHeight;
-    unsigned int textSpaceY;
+    unsigned int textSpace;
 
     // Scoreboard View
     sf::Text ScoreboardTitle;
