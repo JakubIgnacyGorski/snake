@@ -107,10 +107,10 @@ std::string snakeMenu::buttonPressed(const float x, const float y) const {
     for (int button=0; button<5; button++) {
         buttonX = menuButtonShapes[button].getPosition().x;
         buttonY = menuButtonShapes[button].getPosition().y;
-        buttonWidth = menuButtonShapes[button].getLocalBounds().width;
-        buttonHeight = menuButtonShapes[button].getLocalBounds().height;
-        if (x>=buttonX && x<=buttonX+buttonWidth &&
-            y>=buttonY && y<=buttonY+buttonHeight) return menuText[button].getString();
+        buttonWidth = buttonX + menuButtonShapes[button].getLocalBounds().width;
+        buttonHeight = buttonY + menuButtonShapes[button].getLocalBounds().height;
+        if (x>=buttonX && x<=buttonWidth && y>=buttonY && y<=buttonHeight)
+            return menuText[button].getString();
     }
     return "NULL";
 }
