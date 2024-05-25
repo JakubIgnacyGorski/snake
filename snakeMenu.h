@@ -11,6 +11,7 @@ class snakeMenu {
     sf::RectangleShape menuButtonShapes[5];
     FontManager & fontmgr;
     sf::Text menuText[5];
+    sf::Text welcomeText;
     int windowWidth;
     int windowHeight;
     void setupButtons();

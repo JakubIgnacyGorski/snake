@@ -12,10 +12,10 @@ snakeMenu::snakeMenu(sf::RenderWindow &window, FontManager & f) : fontmgr(f) {
 
 
     setupButtons();
-    setupText();
-
-
     updateButtons();
+
+
+    setupText();
     updateText();
 }
 
@@ -66,6 +66,12 @@ void snakeMenu::setupText() {
         menuText[text].setFillColor(sf::Color::Black);
         menuText[text].setString(setstring[text]);
     }
+
+    welcomeText.setFont(fontmgr.getFont());
+    welcomeText.setCharacterSize(std::min(windowWidth, windowHeight)*0.15);
+    welcomeText.setFillColor(sf::Color::Black);
+    welcomeText.setString("SNAKE");
+    welcomeText.setPosition((windowWidth-welcomeText.getLocalBounds().width)*0.5, (menuButtonShapes[1].getGlobalBounds().top-welcomeText.getLocalBounds().height)*0.5);
 }
 
 void snakeMenu::updateText() {
@@ -89,6 +95,7 @@ void snakeMenu::drawMenu(sf::RenderWindow &window) const {
     for (sf::RectangleShape const & button : menuButtonShapes) {
         window.draw(button);
     }
+    window.draw(welcomeText);
     for (sf::Text const & button : menuText) {
         window.draw(button);
     }
