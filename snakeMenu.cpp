@@ -5,6 +5,7 @@
 #include <cstring>
 #include "snakeMenu.h"
 #include "FontManager.h"
+#include "ColorsConsts.h"
 
 snakeMenu::snakeMenu(sf::RenderWindow &window, FontManager & f) : fontmgr(f) {
     windowWidth = window.getSize().x;
@@ -24,7 +25,7 @@ void snakeMenu::setupButtons() {
     float const buttonHeight = windowHeight * 0.1;
     float const longButtonWidth = shortButtonWidth * 3 + std::max(shortButtonWidth, buttonHeight) * 0.05*2;
     for (sf::RectangleShape & button : menuButtonShapes){
-        button.setFillColor(sf::Color::Cyan);
+        button.setFillColor(buttonColor);
     }
     for (int button=0; button<3; button++) {
         menuButtonShapes[button].setSize(sf::Vector2f(shortButtonWidth, buttonHeight));
@@ -63,7 +64,7 @@ void snakeMenu::setupText() {
     float textSize,buttonSize;
     for (int text=0; text<5; text++) {
         menuText[text].setFont(fontmgr.getFont());
-        menuText[text].setFillColor(sf::Color::Black);
+        menuText[text].setFillColor(textColor);
         menuText[text].setString(setstring[text]);
         menuText[text].setCharacterSize(menuButtonShapes[text].getSize().y*0.3);
         textSize = menuText[text].getLocalBounds().width;
@@ -75,7 +76,7 @@ void snakeMenu::setupText() {
 
     welcomeText.setFont(fontmgr.getFont());
     welcomeText.setCharacterSize(std::min(windowWidth, windowHeight)*0.15);
-    welcomeText.setFillColor(sf::Color::Black);
+    welcomeText.setFillColor(textColor);
     welcomeText.setString("SNAKE");
 }
 
@@ -98,7 +99,7 @@ void snakeMenu::updateText() {
 }
 
 void snakeMenu::drawMenu(sf::RenderWindow &window) const {
-    window.clear(sf::Color::White);
+        window.clear(backgroundColor);
     for (sf::RectangleShape const & button : menuButtonShapes) {
         window.draw(button);
     }

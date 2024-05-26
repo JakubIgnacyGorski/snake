@@ -5,6 +5,7 @@
 #include "FontManager.h"
 #include <iostream>
 #include <cstring>
+#include <SFML/Graphics/Text.hpp>
 
 FontManager::FontManager() {
     if (!Font.loadFromFile("fonts/sd-snatcher.ttf")) {

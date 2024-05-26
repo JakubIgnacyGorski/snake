@@ -4,7 +4,7 @@
 
 #ifndef SNAKE_FONTMANAGER_H
 #define SNAKE_FONTMANAGER_H
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 class FontManager {
     sf::Font Font;

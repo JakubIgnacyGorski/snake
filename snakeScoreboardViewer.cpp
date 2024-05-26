@@ -3,6 +3,7 @@
 //
 
 #include "snakeScoreboardViewer.h"
+#include "ColorsConsts.h"
 
 snakeScoreboardViewer::snakeScoreboardViewer(snakeBody & s, FontManager & f, snakeScoreboard & scb, const sf::RenderWindow & window ) : snake(s), fontmgr(f), scoreboard(scb){
     windowWidth = window.getSize().x;
@@ -17,7 +18,7 @@ snakeScoreboardViewer::snakeScoreboardViewer(snakeBody & s, FontManager & f, sna
 void snakeScoreboardViewer::setupViewText() {
     ScoreboardTitle.setCharacterSize(textSpace * 0.8);
     ScoreboardTitle.setFont(fontmgr.getFont());
-    ScoreboardTitle.setFillColor(sf::Color::Black);
+    ScoreboardTitle.setFillColor(textColor);
     ScoreboardTitle.setString("Scoreboard:");
     unsigned int x=(windowWidth-ScoreboardTitle.getLocalBounds().width)*0.5;
     ScoreboardTitle.setPosition(x, textSpace * 0.2);
@@ -25,18 +26,18 @@ void snakeScoreboardViewer::setupViewText() {
     for (sf::Text & text : ScoreboardText) {
         text.setCharacterSize(textSpace * 0.5);
         text.setFont(fontmgr.getFont());
-        text.setFillColor(sf::Color::Black);
+        text.setFillColor(textColor);
     }
 }
 
 void snakeScoreboardViewer::setupWriteText() {
     ScoreTitle.setCharacterSize(textSpace * 0.7);
     ScoreTitle.setFont(fontmgr.getFont());
-    ScoreTitle.setFillColor(sf::Color::Black);
+    ScoreTitle.setFillColor(textColor);
 
     playerNick.setCharacterSize(textSpace * 0.5);
     playerNick.setFont(fontmgr.getFont());
-    playerNick.setFillColor(sf::Color::Black);
+    playerNick.setFillColor(textColor);
 
     const unsigned int x=(windowWidth-playerNick.getCharacterSize()*playerNickLength)*0.5;
     const unsigned int nickYPos=(windowHeight-playerNick.getLocalBounds().height)*0.5;
@@ -45,13 +46,13 @@ void snakeScoreboardViewer::setupWriteText() {
 
     enterNick.setCharacterSize(textSpace * 0.6);
     enterNick.setFont(fontmgr.getFont());
-    enterNick.setFillColor(sf::Color::Black);
+    enterNick.setFillColor(textColor);
     enterNick.setString("Enter your nickname:");
     enterNick.setPosition((windowWidth-enterNick.getLocalBounds().width)*0.5, nickYPos - textSpace);
 }
 
 void snakeScoreboardViewer::drawScoreboard(sf::RenderWindow &window) const {
-    window.clear(sf::Color(250, 250, 250));
+    window.clear(backgroundColor);
     window.draw(ScoreboardTitle);
     for (const sf::Text & text : ScoreboardText) {
         window.draw(text);
@@ -59,7 +60,7 @@ void snakeScoreboardViewer::drawScoreboard(sf::RenderWindow &window) const {
 }
 
 void snakeScoreboardViewer::drawScoreboardSave(sf::RenderWindow &window) const {
-    window.clear(sf::Color(250, 250, 250));
+    window.clear(backgroundColor);
     window.draw(ScoreTitle);
     window.draw(playerNick);
     window.draw(enterNick);
@@ -100,7 +101,7 @@ void snakeScoreboardViewer::updateWriteText() {
 bool snakeScoreboardViewer::inputText(sf::Event & event) {
     sf::String input = playerNick.getString();
     switch (event.text.unicode) {
-        case 8:std::cout<<input.operator std::string()<<std::endl;
+        case 8:
             if (input.isEmpty()) return false;
             input.erase(input.getSize() - 1, 1);
             break;
