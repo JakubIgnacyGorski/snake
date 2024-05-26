@@ -35,10 +35,14 @@ add_executable(Snake-SFML main-sfml.cpp
         FontManager.h
         snakeScoreboardViewer.cpp
         snakeScoreboardViewer.h
+        TextureManager.cpp
+        TextureManager.h
+        ColorsConsts.h
 )
 
 if (TARGET Snake-SFML) # Źródło: https://cmake.org/cmake/help/latest/command/if.html
     file (COPY fonts DESTINATION . FILES_MATCHING PATTERN "*.ttf")
+    file (COPY textures DESTINATION . FILES_MATCHING PATTERN "*.png")
 endif ()
 
 target_link_libraries(Snake-SFML sfml-graphics)
