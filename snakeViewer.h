@@ -7,6 +7,7 @@
 #include "snakeBody.h"
 #include <SFML/Graphics.hpp>
 #include "FontManager.h"
+#include "TextureManager.h"
 
 
 
@@ -14,6 +15,7 @@
 class snakeViewer {
     snakeBody & snake;
     FontManager & fontmgr;
+    TextureManager & texmgr;
     sf::Text Score;
     sf::Text ScoreText;
     sf::RectangleShape snakeHeadShape;
@@ -32,7 +34,7 @@ class snakeViewer {
     void setupScoreCounter();
     void updateScoreCounter();
 public:
-    explicit snakeViewer(snakeBody & s, FontManager & f, const sf::RenderWindow & window);
+    explicit snakeViewer(snakeBody & s, FontManager & f, TextureManager & t, const sf::RenderWindow & window);
     void newSnake();
     void drawGame(sf::RenderWindow & window) const;
     void updateView();

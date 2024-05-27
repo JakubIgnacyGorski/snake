@@ -7,7 +7,7 @@
 #include <string>
 #include "ColorsConsts.h"
 
-snakeViewer::snakeViewer(snakeBody &s, FontManager & f, const sf::RenderWindow & window) : snake(s), fontmgr(f) {
+snakeViewer::snakeViewer(snakeBody &s, FontManager & f, TextureManager & t, const sf::RenderWindow & window) : snake(s), fontmgr(f), texmgr(t) {
     windowWidth = window.getSize().x;
     windowHeight = window.getSize().y;
     offsetY=windowHeight*0.1;
@@ -75,7 +75,10 @@ void snakeViewer::updateFruitView() {
 }
 
 void snakeViewer::setupBackground() {
+    const sf::Texture * backgroundTex = texmgr.getBackgroundTexture();
     background.setFillColor(backgroundColor);
+    background.setTexture(backgroundTex);
+    background.setTextureRect(sf::IntRect(0,0,(snakeBodySize*0.2)*backgroundTex->getSize().x,(snakeBodySize*0.2)*backgroundTex->getSize().y));
     background.setSize(sf::Vector2f(windowWidth,windowHeight-offsetY));
     background.setPosition(0.f, offsetY);
 }

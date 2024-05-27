@@ -6,18 +6,15 @@
 #define SNAKE_TEXTUREMANAGER_H
 #include <SFML/Graphics/Texture.hpp>
 
-enum textureNames { TEST };
-
-struct tex {
-    sf::Texture texture;
-    textureNames name;
-    bool operator==(const textureNames &n) const {return (name==n);}
-};
-
 class TextureManager {
+    sf::Texture snakeHead[4];
+    sf::Texture snakeBody[4];
+    sf::Texture background;
 public:
     TextureManager();
-    sf::Texture & getTexture(const textureNames texName );
+    const sf::Texture * getBackgroundTexture() const;
+    const sf::Texture * getSnakeHead(int dir) const;
+    const sf::Texture * getSnakeBody(int dir) const;
 };
 
 

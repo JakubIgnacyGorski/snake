@@ -14,7 +14,8 @@ int main() {
     window.setFramerateLimit(30);
     FontManager font;
     snakeBody body;
-    snakeViewer viewer(body, font, window);
+    TextureManager texmgr;
+    snakeViewer viewer(body, font,texmgr, window);
     snakeMenu menu{window, font};
     snakeScoreboard scoreboard;
     snakeScoreboardViewer scbviewer(body, font, scoreboard, window);
