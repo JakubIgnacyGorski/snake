@@ -82,24 +82,24 @@ void snakeController::mouse(sf::Event &event, sf::RenderWindow & window) {
 
 int snakeController::findBoardDevider(const int windowWidth, const int windowHeight) const {
     //źródło: https://pl.wikipedia.org/wiki/Algorytm_Euklidesa
-    int a=windowWidth;
+    int div=windowWidth;
     int b=windowHeight;
     int c;
     while (b != 0){
-        c = a % b;
-        a = b;
+        c = div % b;
+        div = b;
         b = c;
     }
 
-    while ( a > windowWidth*0.07 || a > windowHeight*0.07) {
-        b = std::round(a*0.5);
+    while (div > windowWidth * 0.07 || div > windowHeight * 0.07) {
+        b = std::round(div * 0.5);
         while (b != 0){
-            c = a % b;
-            a = b;
+            c = div % b;
+            div = b;
             b = c;
         }
     }
-    return a;
+    return div;
 }
 
 void snakeController::createNewGame(const sf::RenderWindow & window, const GameState State) {
@@ -115,7 +115,7 @@ void snakeController::createNewGame(const sf::RenderWindow & window, const GameS
     switch (Difficulty) {
         case EASY:
             snakeLength = static_cast<int>(width*0.3);
-            timeToMove = 175;
+            timeToMove = 1000;
             break;
         case NORMAL:
             snakeLength = static_cast<int>(width*0.5);

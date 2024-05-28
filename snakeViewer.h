@@ -11,7 +11,6 @@
 
 
 
-
 class snakeViewer {
     snakeBody & snake;
     FontManager & fontmgr;
@@ -28,8 +27,10 @@ class snakeViewer {
     int windowHeight;
     int offsetY;
     void setupSnakeView();
+    void rotateBodyPart(speed dir, sf::RectangleShape & bodyPart);
     void setupHeadTexture();
     void setupBodyTexture(int bodyPart);
+    void setupBackTexture();
     void updateSnakeView();
     void setupFruitView();
     void updateFruitView();

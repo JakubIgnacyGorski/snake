@@ -13,7 +13,7 @@ const sf::Color scoreBackgroundColor{47,201,143};
 const sf::Color buttonColor{218,225,98};
 const sf::Color snakeBodyColor{255,255,255};
 const sf::Color snakeHeadColor{snakeBodyColor};
-const sf::Color snakeBackColor{0,0,0};
+const sf::Color snakeBackColor{snakeBodyColor};
 const sf::Color snakeFoodColor{225,98,31};
 const sf::Color textColor{24,24,24};
 

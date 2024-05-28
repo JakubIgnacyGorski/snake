@@ -17,7 +17,7 @@ snakeBody::snakeBody() {
 
     for (int len=0; len < 4; len++) {
         setupPosition = {5-len, 4};
-        bodyPosition.emplace_back(setupPosition);
+        bodyPosition.emplace_back(snakeBodyPart{setupPosition, speed{0,0}});
     }
 
     fruitPoint = {7, 4};
@@ -40,7 +40,7 @@ snakeBody::snakeBody(int width, int height, int snakeLength, GameState startupSt
 
     for (int len=0; len < snakeLength; len++) {
         setupPosition = {startPlace-len, static_cast<int>(height*0.5)};
-        bodyPosition.emplace_back(setupPosition);
+        bodyPosition.emplace_back(snakeBodyPart{setupPosition, speed{0,0}});
     }
 
     placeFruit();
@@ -67,14 +67,14 @@ bool snakeBody::isOnMap(point const & item) const {
 
 bool snakeBody::snakeMove(speed const & newSnakeSpeed) {
     if (State!=RUNNING) return false;
-    point newHead = {bodyPosition.front().x+newSnakeSpeed.Vx,
-                     bodyPosition.front().y+newSnakeSpeed.Vy};
+    point newHead = {bodyPosition.front().position.x+newSnakeSpeed.Vx,
+                     bodyPosition.front().position.y+newSnakeSpeed.Vy};
     if (collisionDetection(newHead)) {
         State=SCOREBOARD_WRITE;
         return false;
     }
 
-    bodyPosition.push_front(newHead);
+    bodyPosition.push_front(snakeBodyPart{newHead, newSnakeSpeed});
     if (!isSnakeCanEat(newHead)) {
         bodyPosition.pop_back();
     }
@@ -86,12 +86,12 @@ bool snakeBody::snakeMove(speed const & newSnakeSpeed) {
 char snakeBody::isPartOfSnake(point const & lookingPoint) const {
     auto snakeHeadPointer = bodyPosition.begin();
     auto snakeBackPointer = (--bodyPosition.end());
-    if ((*snakeHeadPointer) == lookingPoint) return 'G';
-    if ((*snakeBackPointer) == lookingPoint) return 'b';
+    if ((snakeHeadPointer->position) == lookingPoint) return 'G';
+    if ((snakeBackPointer->position) == lookingPoint) return 'b';
     snakeBackPointer--;
     while (snakeHeadPointer!=snakeBackPointer) {
         snakeHeadPointer++;
-        if ((*snakeHeadPointer) == lookingPoint) return 'o';
+        if ((snakeHeadPointer->position) == lookingPoint) return 'o';
     }
     return '-';
 }
@@ -123,7 +123,7 @@ bool snakeBody::isSnakeCanEat(point const & item) const {
 
 bool snakeBody::snakeEating() {
     if (State!=RUNNING) return false;
-    if (isSnakeCanEat(bodyPosition.front())) {
+    if (isSnakeCanEat(bodyPosition.front().position)) {
         score++;
         placeFruit();
 //        std::cout<<"Punkty: "<<score<<std::endl;
@@ -132,7 +132,7 @@ bool snakeBody::snakeEating() {
     return false;
 }
 
-std::list<point> snakeBody::snakePosition() const {
+std::list<snakeBodyPart> & snakeBody::snakePosition() {
     return bodyPosition;
 }
 

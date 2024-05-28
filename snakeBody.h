@@ -21,8 +21,13 @@ struct speed {
     bool operator!=(const speed &s) const {return (Vx!=s.Vx || Vy!=s.Vy);}
 };
 
+struct snakeBodyPart {
+    point position;
+    speed bodySpeed;
+};
+
 class snakeBody {
-    std::list<point> bodyPosition;
+    std::list<snakeBodyPart> bodyPosition;
     speed snakeSpeed;
     GameState State;
     unsigned int score;
@@ -41,7 +46,7 @@ public:
     bool collisionDetection(point const & item) const;
     bool isSnakeCanEat(point const & item) const;
     bool snakeEating();
-    std::list<point> snakePosition() const;
+    std::list<snakeBodyPart> & snakePosition();
     int getSnakeLength() const;
     point getFruitPoint() const;
     speed getSnakeSpeed() const;
