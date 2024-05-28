@@ -4,6 +4,7 @@
 
 #include "snakeController.h"
 #include <iostream>
+#include <cmath>
 
 snakeController::snakeController(snakeBody &b, snakeViewer &v, snakeMenu &m,snakeScoreboard &s, snakeScoreboardViewer & scb) : snake(b), viewer(v), menu(m), scoreboard(s), scbViewer(scb) {
     timeToMove = 200;
@@ -79,15 +80,42 @@ void snakeController::mouse(sf::Event &event, sf::RenderWindow & window) {
 
 }
 
+int snakeController::findBoardDevider(const int windowWidth, const int windowHeight) const {
+    //źródło: https://pl.wikipedia.org/wiki/Algorytm_Euklidesa
+    int a=windowWidth;
+    int b=windowHeight;
+    int c;
+    while (b != 0){
+        c = a % b;
+        a = b;
+        b = c;
+    }
+
+    while ( a > windowWidth*0.07 || a > windowHeight*0.07) {
+        b = std::round(a*0.5);
+        while (b != 0){
+            c = a % b;
+            a = b;
+            b = c;
+        }
+    }
+    return a;
+}
+
 void snakeController::createNewGame(const sf::RenderWindow & window, const GameState State) {
-    int width = static_cast<int>(window.getSize().x*0.05);
-    int height = static_cast<int>((window.getSize().y-viewer.getOffsetY())*0.05);
+    const int windowWidth = window.getSize().x;
+    const int windowHeight = window.getSize().y-viewer.getOffsetY();
+    int dev = findBoardDevider(windowWidth, windowHeight);
+
+    int width = windowWidth/dev;
+    int height = windowHeight/dev;
+
     int snakeLength;
 
     switch (Difficulty) {
         case EASY:
             snakeLength = static_cast<int>(width*0.3);
-            timeToMove = 125;
+            timeToMove = 175;
             break;
         case NORMAL:
             snakeLength = static_cast<int>(width*0.5);
@@ -159,8 +187,6 @@ void snakeController::play(sf::RenderWindow & window) {
         window.display();
     }
 }
-
-
 
 
 
