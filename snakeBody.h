@@ -46,7 +46,7 @@ public:
     bool collisionDetection(point const & item) const;
     bool isSnakeCanEat(point const & item) const;
     bool snakeEating();
-    std::list<snakeBodyPart> & snakePosition();
+    const std::list<snakeBodyPart> & snakePosition();
     int getSnakeLength() const;
     point getFruitPoint() const;
     speed getSnakeSpeed() const;

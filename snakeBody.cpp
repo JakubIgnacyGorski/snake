@@ -132,7 +132,7 @@ bool snakeBody::snakeEating() {
     return false;
 }
 
-std::list<snakeBodyPart> & snakeBody::snakePosition() {
+const std::list<snakeBodyPart> & snakeBody::snakePosition() {
     return bodyPosition;
 }
 
