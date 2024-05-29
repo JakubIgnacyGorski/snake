@@ -52,7 +52,7 @@ void snakeScoreboardViewer::setupWriteText() {
 }
 
 void snakeScoreboardViewer::drawScoreboard(sf::RenderWindow &window) const {
-    window.clear(backgroundColor);
+    window.clear(scoreboardViewBackgroundColor);
     window.draw(ScoreboardTitle);
     for (const sf::Text & text : ScoreboardText) {
         window.draw(text);
@@ -60,7 +60,7 @@ void snakeScoreboardViewer::drawScoreboard(sf::RenderWindow &window) const {
 }
 
 void snakeScoreboardViewer::drawScoreboardSave(sf::RenderWindow &window) const {
-    window.clear(backgroundColor);
+    window.clear(scoreboardWriteBackgroundColor);
     window.draw(ScoreTitle);
     window.draw(playerNick);
     window.draw(enterNick);

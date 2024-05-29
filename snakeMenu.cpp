@@ -99,7 +99,7 @@ void snakeMenu::updateText() {
 }
 
 void snakeMenu::drawMenu(sf::RenderWindow &window) const {
-        window.clear(backgroundColor);
+        window.clear(menuBackgroundColor);
     for (sf::RectangleShape const & button : menuButtonShapes) {
         window.draw(button);
     }

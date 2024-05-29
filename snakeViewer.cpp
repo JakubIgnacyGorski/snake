@@ -184,7 +184,7 @@ void snakeViewer::updateFruitView() {
 
 void snakeViewer::setupBackground() {
     const sf::Texture * backgroundTex = texmgr.getBackgroundTexture();
-    background.setFillColor(backgroundColor);
+    background.setFillColor(gameBackgroundColor);
     background.setTexture(backgroundTex);
     background.setTextureRect(sf::IntRect(0,0,(snakeBodySize*0.2)*backgroundTex->getSize().x,(snakeBodySize*0.2)*backgroundTex->getSize().y));
     background.setSize(sf::Vector2f(windowWidth,windowHeight-offsetY));
