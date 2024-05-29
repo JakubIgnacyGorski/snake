@@ -5,6 +5,7 @@
 #include "snakeViewer.h"
 #include <iostream>
 #include <string>
+#include <random>
 #include "ColorsConsts.h"
 
 snakeViewer::snakeViewer(snakeBody &s, FontManager & f, TextureManager & t, const sf::RenderWindow & window) : snake(s), fontmgr(f), texmgr(t) {
@@ -160,7 +161,15 @@ void snakeViewer::updateSnakeView() {
 
 void snakeViewer::setupFruitView() {
     fruitShape.setFillColor(snakeFoodColor);
-    fruitShape.setRadius(snakeBodySize*0.5);
+    fruitShape.setSize(sf::Vector2f(static_cast<float>(snakeBodySize), static_cast<float>(snakeBodySize)));
+}
+
+void snakeViewer::randomFruitTexture() {
+    std::random_device rd;
+    std::default_random_engine randomEngine(rd());
+    std::uniform_int_distribution<int> texture(0, fruitCount-1);
+
+    fruitShape.setTexture(texmgr.getFruitTexture(texture(randomEngine)));
 }
 
 void snakeViewer::updateFruitView() {
@@ -169,6 +178,7 @@ void snakeViewer::updateFruitView() {
     int tmpFruitPositionY = fruit.y *(snakeBodySize)+offsetY;
 
     fruitShape.setPosition(tmpFruitPositionX, tmpFruitPositionY);
+    randomFruitTexture();
 
 }
 
@@ -221,7 +231,6 @@ void snakeViewer::drawGame(sf::RenderWindow &window) const {
 
 void snakeViewer::updateView() {
     updateSnakeView();
-    updateFruitView();
     updateScoreCounter();
 }
 
@@ -234,6 +243,7 @@ void snakeViewer::addSnakePart() {
     snakeBodyShape.back().setRotation(0);
 
     updateSnakeView();
+    updateFruitView();
 }
 
 int snakeViewer::getOffsetY() const {

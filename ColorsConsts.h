@@ -14,7 +14,7 @@ const sf::Color buttonColor{218,225,98};
 const sf::Color snakeBodyColor{255,255,255};
 const sf::Color snakeHeadColor{snakeBodyColor};
 const sf::Color snakeBackColor{snakeBodyColor};
-const sf::Color snakeFoodColor{225,98,31};
+const sf::Color snakeFoodColor{255,255,255};
 const sf::Color textColor{24,24,24};
 
 #endif //SNAKE_COLORSCONSTS_H

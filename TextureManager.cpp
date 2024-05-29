@@ -5,6 +5,7 @@
 #include <cstring>
 #include <iostream>
 #include <SFML/Graphics/Texture.hpp>
+
 #include "TextureManager.h"
 
 TextureManager::TextureManager() {
@@ -43,6 +44,14 @@ TextureManager::TextureManager() {
         std::cerr << strerror(errno) << std::endl;
         abort();
     }
+
+    const std::string fruitFileNames[fruitCount] { "textures/fruits/apple.png", "textures/fruits/plum.png" };
+    for (int fruitNum=0; fruitNum<fruitCount; fruitNum++) {
+        if (!fruits[fruitNum].loadFromFile(fruitFileNames[fruitNum])) {
+            std::cerr << strerror(errno) << std::endl;
+            abort();
+        }
+    }
 }
 
 const sf::Texture * TextureManager::getBackgroundTexture() const {
@@ -63,6 +72,11 @@ const sf::Texture *TextureManager::getSnakeBack() const {
 
 const sf::Texture *TextureManager::getSnakeTurn(const turnDir dir) const {
     return &snakeTurn[dir];
+}
+
+const sf::Texture *TextureManager::getFruitTexture(int textNum) const {
+    if (textNum>=static_cast<int>(fruits.size()) || textNum<0) return &fruits[0];
+    return &fruits[textNum];
 }
 
 

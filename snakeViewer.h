@@ -20,7 +20,7 @@ class snakeViewer {
     sf::RectangleShape snakeHeadShape;
     std::vector<sf::RectangleShape> snakeBodyShape;
     sf::RectangleShape snakeBackShape;
-    sf::CircleShape fruitShape;
+    sf::RectangleShape fruitShape;
     sf::RectangleShape background;
     int snakeBodySize;
     int windowWidth;
@@ -34,6 +34,7 @@ class snakeViewer {
     void setupBackTexture();
     void updateSnakeView();
     void setupFruitView();
+    void randomFruitTexture();
     void updateFruitView();
     void setupBackground();
     void setupScoreCounter();
