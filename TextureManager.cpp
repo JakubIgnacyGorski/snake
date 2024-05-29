@@ -18,7 +18,7 @@ TextureManager::TextureManager() {
         std::cerr << strerror(errno) << std::endl;
         abort();
     }
-    if (!snakeBody.loadFromFile("textures/snake/body/body-vertical.png")) {
+    if (!snakeBody.loadFromFile("textures/snake/body/body-horizontal.png")) {
         std::cerr << strerror(errno) << std::endl;
         abort();
     }

@@ -6,7 +6,6 @@
 #define SNAKE_TEXTUREMANAGER_H
 #include <SFML/Graphics/Texture.hpp>
 
-enum movDir { UP, RIGHT, DOWN, LEFT};
 enum turnDir { DOWNLEFT, DOWNRIGHT, UPLEFT, UPRIGHT};
 
 class TextureManager {

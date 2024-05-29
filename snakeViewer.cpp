@@ -45,24 +45,52 @@ void snakeViewer::setupSnakeView() {
 
 void snakeViewer::rotateBodyPart(speed dir, sf::RectangleShape & bodyPart) {
     if (dir==speed{0,-1}) {
-        bodyPart.setRotation(270);
-        bodyPart.move(0, bodyPart.getSize().y);
+        bodyPart.setRotation(90);
+        bodyPart.setScale(-1.f, 1.f);
+        bodyPart.move(bodyPart.getSize().x, bodyPart.getSize().y);
     } else if (dir==speed{1,0} || dir==speed{0,0}) {
         bodyPart.setRotation(0);
+        bodyPart.setScale(1.f, 1.f);
     }
     else if (dir==speed{0,1}) {
         bodyPart.setRotation(90);
+        bodyPart.setScale(sf::Vector2f (1.f,1.f));
         bodyPart.move(bodyPart.getSize().x,0);
     }
     else if (dir==speed{-1,0}){
-        bodyPart.setRotation(180);
-        bodyPart.move(bodyPart.getSize().x,bodyPart.getSize().y);
+        bodyPart.setRotation(0);
+        bodyPart.setScale(-1.f,1.f);
+        bodyPart.move(bodyPart.getSize().x,0);
     }
 }
 
 void snakeViewer::setupHeadTexture() {
     snakeHeadShape.setTexture(texmgr.getSnakeHead());
     rotateBodyPart(snake.getSnakeSpeed(), snakeHeadShape);
+}
+
+void snakeViewer::setupTurnTexture(sf::RectangleShape &bodyPart, std::list<snakeBodyPart>::const_iterator snakeBody) {
+    auto afterBodyPartSpeed = --snakeBody;
+    auto beforeBodyPartSpeed = ++snakeBody;
+    if ((beforeBodyPartSpeed->bodySpeed.Vx == 1 && afterBodyPartSpeed->bodySpeed.Vy == -1) ||
+        (beforeBodyPartSpeed->bodySpeed.Vy == 1 && afterBodyPartSpeed->bodySpeed.Vx == -1)) {
+        bodyPart.setTexture(texmgr.getSnakeTurn(DOWNRIGHT));
+    } else if ((beforeBodyPartSpeed->bodySpeed.Vy == 1 && afterBodyPartSpeed->bodySpeed.Vx == 1) ||
+               (beforeBodyPartSpeed->bodySpeed.Vx == -1 && afterBodyPartSpeed->bodySpeed.Vy == -1)) {
+        bodyPart.setTexture(texmgr.getSnakeTurn(DOWNLEFT));
+    } else if ((beforeBodyPartSpeed->bodySpeed.Vx == 1 && afterBodyPartSpeed->bodySpeed.Vy == 1) ||
+               (beforeBodyPartSpeed->bodySpeed.Vy == -1 && afterBodyPartSpeed->bodySpeed.Vx == -1)) {
+        bodyPart.setTexture(texmgr.getSnakeTurn(UPRIGHT));
+    } else if ((beforeBodyPartSpeed->bodySpeed.Vy == -1 && afterBodyPartSpeed->bodySpeed.Vx == 1) ||
+               (beforeBodyPartSpeed->bodySpeed.Vx == -1 && afterBodyPartSpeed->bodySpeed.Vy == 1)) {
+        bodyPart.setTexture(texmgr.getSnakeTurn(UPLEFT));
+    } else {
+        return;
+    }
+    bodyPart.setRotation(0);
+    int tmpSnakePositionX = (snakeBody->position.x) * (snakeBodySize);
+    int tmpSnakePositionY = (snakeBody->position.y) * (snakeBodySize)+offsetY;
+    bodyPart.setPosition(tmpSnakePositionX, tmpSnakePositionY);
 }
 
 void snakeViewer::setupBodyTexture(const int bodyPart) {
@@ -87,6 +115,9 @@ void snakeViewer::setupBodyTexture(const int bodyPart) {
         snakeBodyShape[bodyPart].setRotation(90);
         snakeBodyShape[bodyPart].move(snakeBodyShape[bodyPart].getSize().x,0);
     }
+
+    setupTurnTexture(snakeBodyShape[bodyPart-1], snakeBodyPartSpeed);
+
 }
 
 void snakeViewer::setupBackTexture() {
@@ -103,22 +134,20 @@ void snakeViewer::updateSnakeView() {
 
     snakeHeadShape.setPosition(tmpSnakePositionX, tmpSnakePositionY);
     setupHeadTexture();
-//    std::cout<<"-1: "<<tmpSnakePositionX<<','<<tmpSnakePositionY<<std::endl;
 
     for (int bodyPart=0; bodyPart<static_cast<int>(snakeBodyShape.size()); bodyPart++) {
         snakeHeadPointer++;
-        tmpSnakePositionX = snakeHeadPointer->position.x * (snakeBodySize);
-        tmpSnakePositionY = snakeHeadPointer->position.y * snakeBodySize+offsetY;
+        tmpSnakePositionX = (snakeHeadPointer->position.x) * (snakeBodySize);
+        tmpSnakePositionY = (snakeHeadPointer->position.y) * (snakeBodySize)+offsetY;
         snakeBodyShape[bodyPart].setPosition(tmpSnakePositionX, tmpSnakePositionY);
         setupBodyTexture(bodyPart);
-//        std::cout<<bodyPart<<": "<<tmpSnakePositionX<<','<<tmpSnakePositionY<<std::endl;
     }
-    snakeHeadPointer++;
     tmpSnakePositionX = snakePosition.back().position.x * (snakeBodySize);
     tmpSnakePositionY = snakePosition.back().position.y * snakeBodySize+offsetY;
     snakeBackShape.setPosition(tmpSnakePositionX, tmpSnakePositionY);
 
     setupBackTexture();
+    setupTurnTexture(snakeBodyShape.back(), snakeHeadPointer);
 }
 
 void snakeViewer::setupFruitView() {
@@ -193,6 +222,8 @@ void snakeViewer::addSnakePart() {
     snakeBodyShape.back().setTexture(snakeBodyShape.begin()->getTexture());
     snakeBodyShape.back().setFillColor(snakeBodyShape.begin()->getFillColor());
     snakeBodyShape.back().setSize(snakeBodyShape.begin()->getSize());
+    snakeBodyShape.back().setScale(1.f, 1.f);
+    snakeBodyShape.back().setRotation(0);
 
     updateSnakeView();
 }

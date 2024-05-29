@@ -29,6 +29,7 @@ class snakeViewer {
     void setupSnakeView();
     void rotateBodyPart(speed dir, sf::RectangleShape & bodyPart);
     void setupHeadTexture();
+    void setupTurnTexture(sf::RectangleShape & bodyPart, std::list<snakeBodyPart>::const_iterator snakeBody);
     void setupBodyTexture(int bodyPart);
     void setupBackTexture();
     void updateSnakeView();
