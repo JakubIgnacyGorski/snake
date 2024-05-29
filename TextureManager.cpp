@@ -14,15 +14,15 @@ TextureManager::TextureManager() {
         abort();
     }
     background.setRepeated(true); //źródło: https://www.sfml-dev.org/documentation/2.6.1/classsf_1_1Texture.php#aaa87d1eff053b9d4d34a24c784a28658
-    if (!snakeHead.loadFromFile("textures/snake/head/head-right.png")) {
+    if (!snakeHead.loadFromFile("textures/snake/head.png")) {
         std::cerr << strerror(errno) << std::endl;
         abort();
     }
-    if (!snakeBody.loadFromFile("textures/snake/body/body-horizontal.png")) {
+    if (!snakeBody.loadFromFile("textures/snake/body.png")) {
         std::cerr << strerror(errno) << std::endl;
         abort();
     }
-    if (!snakeBack.loadFromFile("textures/snake/tail/tail-right.png")) {
+    if (!snakeBack.loadFromFile("textures/snake/tail.png")) {
         std::cerr << strerror(errno) << std::endl;
         abort();
     }
