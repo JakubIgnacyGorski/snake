@@ -73,25 +73,44 @@ void snakeViewer::setupHeadTexture() {
 void snakeViewer::setupTurnTexture(sf::RectangleShape &bodyPart, std::list<snakeBodyPart>::const_iterator snakeBody) {
     auto afterBodyPartSpeed = --snakeBody;
     snakeBody++;
-    if ((snakeBody->bodySpeed.Vx == 1 && afterBodyPartSpeed->bodySpeed.Vy == -1) ||
-        (snakeBody->bodySpeed.Vy == 1 && afterBodyPartSpeed->bodySpeed.Vx == -1) ||
-        (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vy == -1) ||
-        (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vx == -1)) {
+//    if ((snakeBody->bodySpeed.Vx == 1 && afterBodyPartSpeed->bodySpeed.Vy == -1) ||
+//        (snakeBody->bodySpeed.Vy == 1 && afterBodyPartSpeed->bodySpeed.Vx == -1) ||
+//        (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vy == -1) ||
+//        (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vx == -1)) {
+//        bodyPart.setTexture(texmgr.getSnakeTurn(DOWNRIGHT));
+//    } else if ((snakeBody->bodySpeed.Vy == 1 && afterBodyPartSpeed->bodySpeed.Vx == 1) ||
+//               (snakeBody->bodySpeed.Vx == -1 && afterBodyPartSpeed->bodySpeed.Vy == -1) ||
+//               (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vx == 1) ||
+//               (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vy == -1)) {
+//        bodyPart.setTexture(texmgr.getSnakeTurn(DOWNLEFT));
+//    } else if ((snakeBody->bodySpeed.Vx == 1 && afterBodyPartSpeed->bodySpeed.Vy == 1) ||
+//               (snakeBody->bodySpeed.Vy == -1 && afterBodyPartSpeed->bodySpeed.Vx == -1) ||
+//               (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vy == 1) ||
+//               (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vx == -1)) {
+//        bodyPart.setTexture(texmgr.getSnakeTurn(UPRIGHT));
+//    } else if ((snakeBody->bodySpeed.Vy == -1 && afterBodyPartSpeed->bodySpeed.Vx == 1) ||
+//               (snakeBody->bodySpeed.Vx == -1 && afterBodyPartSpeed->bodySpeed.Vy == 1) ||
+//               (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vx == 1) ||
+//               (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vy == 1)) {
+//        bodyPart.setTexture(texmgr.getSnakeTurn(UPLEFT));
+//    } else {
+//        return;
+//    }
+    if ((snakeBody->bodySpeed.Vx > 0 && afterBodyPartSpeed->bodySpeed.Vy < 0) ||
+        (snakeBody->bodySpeed.Vy > 0 && afterBodyPartSpeed->bodySpeed.Vx < 0) ||
+        (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vx<0) ||
+        (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vy<0)) {
         bodyPart.setTexture(texmgr.getSnakeTurn(DOWNRIGHT));
-    } else if ((snakeBody->bodySpeed.Vy == 1 && afterBodyPartSpeed->bodySpeed.Vx == 1) ||
-               (snakeBody->bodySpeed.Vx == -1 && afterBodyPartSpeed->bodySpeed.Vy == -1) ||
-               (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vx == 1) ||
-               (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vy == -1)) {
+    } else if ((snakeBody->bodySpeed.Vy > 0 && afterBodyPartSpeed->bodySpeed.Vx > 0) ||
+               (snakeBody->bodySpeed.Vx < 0 && afterBodyPartSpeed->bodySpeed.Vy < 0) ||
+               (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vy<0)) {
         bodyPart.setTexture(texmgr.getSnakeTurn(DOWNLEFT));
-    } else if ((snakeBody->bodySpeed.Vx == 1 && afterBodyPartSpeed->bodySpeed.Vy == 1) ||
-               (snakeBody->bodySpeed.Vy == -1 && afterBodyPartSpeed->bodySpeed.Vx == -1) ||
-               (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vy == 1) ||
-               (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vx == -1)) {
+    } else if ((snakeBody->bodySpeed.Vx > 0 && afterBodyPartSpeed->bodySpeed.Vy > 0) ||
+               (snakeBody->bodySpeed.Vy < 0 && afterBodyPartSpeed->bodySpeed.Vx < 0)) {
         bodyPart.setTexture(texmgr.getSnakeTurn(UPRIGHT));
-    } else if ((snakeBody->bodySpeed.Vy == -1 && afterBodyPartSpeed->bodySpeed.Vx == 1) ||
-               (snakeBody->bodySpeed.Vx == -1 && afterBodyPartSpeed->bodySpeed.Vy == 1) ||
-               (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vx == 1) ||
-               (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vy == 1)) {
+    } else if ((snakeBody->bodySpeed.Vy < 0 && afterBodyPartSpeed->bodySpeed.Vx > 0) ||
+               (snakeBody->bodySpeed.Vx < 0 && afterBodyPartSpeed->bodySpeed.Vy > 0) ||
+               (snakeBody->bodySpeed == speed{0,0} && afterBodyPartSpeed->bodySpeed.Vy>0)) {
         bodyPart.setTexture(texmgr.getSnakeTurn(UPLEFT));
     } else {
         return;

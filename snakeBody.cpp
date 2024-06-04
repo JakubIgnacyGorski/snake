@@ -123,12 +123,11 @@ bool snakeBody::isSnakeCanEat(point const & item) const {
 
 bool snakeBody::snakeEating() {
     if (State!=RUNNING) return false;
-    if (isSnakeCanEat(bodyPosition.front().position)) {
-        score++;
-        placeFruit();
-        return true;
-    }
-    return false;
+    if (!isSnakeCanEat(bodyPosition.front().position)) return false;
+
+    score++;
+    placeFruit();
+    return true;
 }
 
 const std::list<snakeBodyPart> & snakeBody::snakePosition() {
