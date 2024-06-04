@@ -7,11 +7,13 @@
 #include "snakeScoreboard.h"
 #include "snakeBody.h"
 #include "FontManager.h"
+#include "TextureManager.h"
 #include <SFML/Graphics.hpp>
 
 class snakeScoreboardViewer {
     snakeBody & snake;
     FontManager & fontmgr;
+    TextureManager & texmgr;
     snakeScoreboard & scoreboard;
     int windowWidth;
     int windowHeight;
@@ -20,17 +22,20 @@ class snakeScoreboardViewer {
     // Scoreboard View
     sf::Text ScoreboardTitle;
     sf::Text ScoreboardText[scoreboardSize];
+    sf::RectangleShape viewBackground;
 
     // Scoreboard Write
     sf::Text ScoreTitle;
     sf::Text playerNick;
     sf::Text enterNick;
+    sf::RectangleShape writeBackground;
 
     void setupViewText();
     void setupWriteText();
+    void setupBackground();
 
 public:
-    snakeScoreboardViewer(snakeBody & s, FontManager & f, snakeScoreboard & scb, const sf::RenderWindow & window);
+    snakeScoreboardViewer(const sf::RenderWindow & window, snakeBody & s, FontManager & f, TextureManager & t, snakeScoreboard & scb);
     void drawScoreboard(sf::RenderWindow & window) const;
     void drawScoreboardSave(sf::RenderWindow & window) const;
     void updateViewText();

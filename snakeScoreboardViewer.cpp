@@ -5,7 +5,7 @@
 #include "snakeScoreboardViewer.h"
 #include "ColorsConsts.h"
 
-snakeScoreboardViewer::snakeScoreboardViewer(snakeBody & s, FontManager & f, snakeScoreboard & scb, const sf::RenderWindow & window ) : snake(s), fontmgr(f), scoreboard(scb){
+snakeScoreboardViewer::snakeScoreboardViewer(const sf::RenderWindow & window, snakeBody & s, FontManager & f, TextureManager & t, snakeScoreboard & scb): snake(s), fontmgr(f), texmgr(t), scoreboard(scb){
     windowWidth = window.getSize().x;
     windowHeight = window.getSize().y;
     textSpace= std::min(windowHeight, windowWidth) / (scoreboardSize + 4);
@@ -13,6 +13,7 @@ snakeScoreboardViewer::snakeScoreboardViewer(snakeBody & s, FontManager & f, sna
     setupViewText();
     updateViewText();
     setupWriteText();
+    setupBackground();
 }
 
 void snakeScoreboardViewer::setupViewText() {
@@ -51,8 +52,25 @@ void snakeScoreboardViewer::setupWriteText() {
     enterNick.setPosition((windowWidth-enterNick.getLocalBounds().width)*0.5, nickYPos - textSpace);
 }
 
+void snakeScoreboardViewer::setupBackground() {
+    const sf::Texture * viewBackgroundTex = texmgr.getBackgroundTexture();
+    viewBackground.setFillColor(scoreboardViewBackgroundColor);
+    viewBackground.setTexture(viewBackgroundTex);
+    viewBackground.setTextureRect(sf::IntRect(0,0,windowWidth*0.005*viewBackgroundTex->getSize().x,windowHeight*0.005*viewBackgroundTex->getSize().y));
+    viewBackground.setSize(sf::Vector2f(windowWidth,windowHeight));
+    viewBackground.setPosition(0.f, 0.f);
+
+    const sf::Texture * writeBackgroundTex = viewBackgroundTex;
+    writeBackground.setFillColor(scoreboardWriteBackgroundColor);
+    writeBackground.setTexture(writeBackgroundTex);
+    writeBackground.setTextureRect(sf::IntRect(0,0,windowWidth*0.005*writeBackgroundTex->getSize().x,windowHeight*0.005*writeBackgroundTex->getSize().y));
+    writeBackground.setSize(sf::Vector2f(windowWidth,windowHeight));
+    writeBackground.setPosition(0.f, 0.f);
+}
+
 void snakeScoreboardViewer::drawScoreboard(sf::RenderWindow &window) const {
     window.clear(scoreboardViewBackgroundColor);
+    window.draw(viewBackground);
     window.draw(ScoreboardTitle);
     for (const sf::Text & text : ScoreboardText) {
         window.draw(text);
@@ -61,6 +79,7 @@ void snakeScoreboardViewer::drawScoreboard(sf::RenderWindow &window) const {
 
 void snakeScoreboardViewer::drawScoreboardSave(sf::RenderWindow &window) const {
     window.clear(scoreboardWriteBackgroundColor);
+    window.draw(writeBackground);
     window.draw(ScoreTitle);
     window.draw(playerNick);
     window.draw(enterNick);

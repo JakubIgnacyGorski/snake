@@ -18,7 +18,7 @@ int main() {
     snakeViewer viewer(body, font,texmgr, window);
     snakeMenu menu{window, font, texmgr};
     snakeScoreboard scoreboard;
-    snakeScoreboardViewer scbviewer(body, font, scoreboard, window);
+    snakeScoreboardViewer scbviewer(window,body, font, texmgr, scoreboard);
     snakeController ctr(body, viewer, menu, scbviewer);
 
     ctr.play(window);
