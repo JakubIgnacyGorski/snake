@@ -10,7 +10,7 @@
 #include "snakeMenu.h"
 #include "snakeScoreboard.h"
 #include "snakeScoreboardViewer.h"
-enum GameDifficulty {EASY, NORMAL, HARD};
+
 
 
 class snakeController {
@@ -19,7 +19,7 @@ class snakeController {
     snakeMenu & menu;
     snakeScoreboard & scoreboard;
     snakeScoreboardViewer & scbViewer;
-    GameDifficulty Difficulty;
+//    GameDifficulty Difficulty;
     sf::Clock clock;
     sf::Time moveDelay;
     int timeToMove;

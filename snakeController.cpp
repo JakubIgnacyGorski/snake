@@ -8,7 +8,6 @@
 
 snakeController::snakeController(snakeBody &b, snakeViewer &v, snakeMenu &m,snakeScoreboard &s, snakeScoreboardViewer & scb) : snake(b), viewer(v), menu(m), scoreboard(s), scbViewer(scb) {
     timeToMove = 200;
-    Difficulty=NORMAL;
 }
 
 void snakeController::keyboardGame(sf::Event &event) {
@@ -66,18 +65,17 @@ void snakeController::mouse(sf::Event &event, sf::RenderWindow & window) {
     if (button == "EXIT") {
         window.close();
     } else if (button == "EASY") {
-        Difficulty = EASY;
+        snake.setGameDifficulty(EASY);
         createNewGame(window, RUNNING);
     } else if (button == "NORMAL") {
-        Difficulty = NORMAL;
+        snake.setGameDifficulty(NORMAL);
         createNewGame(window, RUNNING);
     } else if (button == "HARD") {
-        Difficulty = HARD;
+        snake.setGameDifficulty(HARD);
         createNewGame(window, RUNNING);
     } else if (button == "SCOREBOARD") {
         createNewGame(window, SCOREBOARD_VIEW);
     }
-
 }
 
 int snakeController::findBoardDevider(const int windowWidth, const int windowHeight) const {
@@ -111,8 +109,8 @@ void snakeController::createNewGame(const sf::RenderWindow & window, const GameS
     int height = windowHeight/dev;
 
     int snakeLength;
-
-    switch (Difficulty) {
+    GameDifficulty newDif = snake.getGameDifficulty();
+    switch (newDif) {
         case EASY:
             snakeLength = static_cast<int>(width*0.3);
             timeToMove = 1000;
@@ -128,6 +126,7 @@ void snakeController::createNewGame(const sf::RenderWindow & window, const GameS
     }
 
     snake = snakeBody(width, height, snakeLength, State);
+    snake.setGameDifficulty(newDif);
     viewer.newSnake();
 }
 

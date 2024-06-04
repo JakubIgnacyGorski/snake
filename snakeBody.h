@@ -8,6 +8,7 @@
 #include <vector>
 
 enum GameState {RUNNING, SCOREBOARD_WRITE, SCOREBOARD_VIEW, MENU};
+enum GameDifficulty {EASY, NORMAL, HARD};
 
 struct point {
     int x,y;
@@ -29,7 +30,8 @@ struct snakeBodyPart {
 class snakeBody {
     std::list<snakeBodyPart> bodyPosition;
     speed snakeSpeed;
-    GameState State;
+    GameState state;
+    GameDifficulty difficulty;
     unsigned int score;
 
     point fruitPoint;
@@ -39,12 +41,12 @@ class snakeBody {
 public:
     snakeBody();
     snakeBody(int width, int height, int snakeLength, GameState startupState);
-    [[nodiscard]] bool isOnMap(point const & item) const;
-    bool snakeMove(speed const & newSnakeSpeed);
-    char isPartOfSnake(point const & lookingPoint) const;
+    [[nodiscard]] bool isOnMap(const point & item) const;
+    bool snakeMove(const speed & newSnakeSpeed);
+    char isPartOfSnake(const point & lookingPoint) const;
     void debug_display() const;
-    bool collisionDetection(point const & item) const;
-    bool isSnakeCanEat(point const & item) const;
+    bool collisionDetection(const point & item) const;
+    bool isSnakeCanEat(const point & item) const;
     bool snakeEating();
     const std::list<snakeBodyPart> & snakePosition();
     int getSnakeLength() const;
@@ -54,6 +56,8 @@ public:
     GameState getGameState() const;
     point getBoardSize() const;
     unsigned int getScore() const;
+    GameDifficulty getGameDifficulty() const;
+    void setGameDifficulty(GameDifficulty newDif);
 };
 
 

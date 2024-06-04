@@ -10,7 +10,8 @@ snakeBody::snakeBody() {
     snakeSpeed = {0, 0};
     boardWidth = 10;
     boardHeight = 8;
-    State = MENU;
+    state = MENU;
+    difficulty = NORMAL;
 
 
     point setupPosition{};
@@ -26,7 +27,7 @@ snakeBody::snakeBody() {
 snakeBody::snakeBody(int width, int height, int snakeLength, GameState startupState) {
     score = 0;
     snakeSpeed={0,0};
-    State = startupState;
+    state = startupState;
     boardWidth = width;
     boardHeight = height;
 
@@ -48,7 +49,7 @@ snakeBody::snakeBody(int width, int height, int snakeLength, GameState startupSt
 
 
 void snakeBody::placeFruit() {
-    if (State!=RUNNING) return;
+    if (state != RUNNING) return;
     std::random_device rd;
     std::default_random_engine randomEngine(rd());
     std::uniform_int_distribution<int> x(0, boardWidth - 1);
@@ -66,11 +67,11 @@ bool snakeBody::isOnMap(point const & item) const {
 }
 
 bool snakeBody::snakeMove(speed const & newSnakeSpeed) {
-    if (State!=RUNNING) return false;
+    if (state != RUNNING) return false;
     point newHead = {bodyPosition.front().position.x+newSnakeSpeed.Vx,
                      bodyPosition.front().position.y+newSnakeSpeed.Vy};
     if (collisionDetection(newHead)) {
-        State=SCOREBOARD_WRITE;
+        state=SCOREBOARD_WRITE;
         return false;
     }
 
@@ -122,10 +123,20 @@ bool snakeBody::isSnakeCanEat(point const & item) const {
 }
 
 bool snakeBody::snakeEating() {
-    if (State!=RUNNING) return false;
+    if (state != RUNNING) return false;
     if (!isSnakeCanEat(bodyPosition.front().position)) return false;
 
-    score++;
+    switch (difficulty) {
+        case EASY:
+            score++;
+            break;
+        case NORMAL:
+            score+=2;
+            break;
+        case HARD:
+            score+=3;
+            break;
+    }
     placeFruit();
     return true;
 }
@@ -151,7 +162,7 @@ void snakeBody::setSnakeSpeed(speed newSpeed) {
 }
 
 GameState snakeBody::getGameState() const {
-    return State;
+    return state;
 }
 
 point snakeBody::getBoardSize() const {
@@ -160,6 +171,14 @@ point snakeBody::getBoardSize() const {
 
 unsigned int snakeBody::getScore() const {
     return score;
+}
+
+GameDifficulty snakeBody::getGameDifficulty() const {
+    return difficulty;
+}
+
+void snakeBody::setGameDifficulty(GameDifficulty newDif) {
+    difficulty=newDif;
 }
 
 
