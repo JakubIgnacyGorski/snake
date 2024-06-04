@@ -126,7 +126,6 @@ bool snakeBody::snakeEating() {
     if (isSnakeCanEat(bodyPosition.front().position)) {
         score++;
         placeFruit();
-//        std::cout<<"Punkty: "<<score<<std::endl;
         return true;
     }
     return false;
@@ -155,10 +154,6 @@ void snakeBody::setSnakeSpeed(speed newSpeed) {
 GameState snakeBody::getGameState() const {
     return State;
 }
-
-//void snakeBody::changeGameState(GameState newGameState) {
-//    State = newGameState;
-//}
 
 point snakeBody::getBoardSize() const {
     return point{boardWidth, boardHeight};
