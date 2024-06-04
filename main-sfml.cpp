@@ -16,7 +16,7 @@ int main() {
     snakeBody body;
     TextureManager texmgr;
     snakeViewer viewer(body, font,texmgr, window);
-    snakeMenu menu{window, font};
+    snakeMenu menu{window, font, texmgr};
     snakeScoreboard scoreboard;
     snakeScoreboardViewer scbviewer(body, font, scoreboard, window);
     snakeController ctr(body, viewer, menu, scbviewer);

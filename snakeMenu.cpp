@@ -7,17 +7,17 @@
 #include "FontManager.h"
 #include "ColorsConsts.h"
 
-snakeMenu::snakeMenu(sf::RenderWindow &window, FontManager & f) : fontmgr(f) {
+snakeMenu::snakeMenu(sf::RenderWindow &window, FontManager & f, TextureManager & t) : fontmgr(f), texmgr(t) {
     windowWidth = window.getSize().x;
     windowHeight = window.getSize().y;
-
 
     setupButtons();
     updateButtons();
 
-
     setupText();
     updateText();
+
+    setupBackground();
 }
 
 void snakeMenu::setupButtons() {
@@ -91,15 +91,24 @@ void snakeMenu::updateText() {
         buttonHeight = menuButtonShapes[text].getLocalBounds().height;
         leftUpButtonCornerX = menuButtonShapes[text].getPosition().x;
         leftUpButtonCornerY = menuButtonShapes[text].getPosition().y;
-//        std::cout<<text<<": "<<buttonWidth<<','<<buttonHeight<<std::endl;
         menuText[text].setPosition(leftUpButtonCornerX + (buttonWidth - textWidth) * 0.5, leftUpButtonCornerY + (buttonHeight - textHeight) * 0.5);
     }
-
     welcomeText.setPosition((windowWidth-welcomeText.getLocalBounds().width)*0.5, (menuButtonShapes[1].getGlobalBounds().top-welcomeText.getLocalBounds().height)*0.5);
 }
 
+void snakeMenu::setupBackground() {
+    const sf::Texture * backgroundTex = texmgr.getBackgroundTexture();
+    background.setFillColor(menuBackgroundColor);
+    background.setTexture(backgroundTex);
+    background.setTextureRect(sf::IntRect(0,0,windowWidth*0.005*backgroundTex->getSize().x,windowHeight*0.005*backgroundTex->getSize().y));
+    background.setSize(sf::Vector2f(windowWidth,windowHeight));
+    background.setPosition(0.f, 0.f);
+}
+
+
 void snakeMenu::drawMenu(sf::RenderWindow &window) const {
         window.clear(menuBackgroundColor);
+        window.draw(background);
     for (sf::RectangleShape const & button : menuButtonShapes) {
         window.draw(button);
     }
@@ -122,11 +131,3 @@ std::string snakeMenu::buttonPressed(const float x, const float y) const {
     }
     return "NULL";
 }
-
-
-
-
-
-
-
-
