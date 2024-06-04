@@ -17,9 +17,7 @@ class snakeController {
     snakeBody & snake;
     snakeViewer & viewer;
     snakeMenu & menu;
-    snakeScoreboard & scoreboard;
     snakeScoreboardViewer & scbViewer;
-//    GameDifficulty Difficulty;
     sf::Clock clock;
     sf::Time moveDelay;
     int timeToMove;
@@ -30,7 +28,7 @@ class snakeController {
     int findBoardDevider(int windowWidth, int windowHeight) const;
     void createNewGame(const sf::RenderWindow & window, GameState State);
 public:
-    snakeController(snakeBody & b, snakeViewer & v, snakeMenu & m, snakeScoreboard & s, snakeScoreboardViewer & scb);
+    snakeController(snakeBody & b, snakeViewer & v, snakeMenu & m, snakeScoreboardViewer & scb);
     void play(sf::RenderWindow & window);
 };
 

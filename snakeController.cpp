@@ -6,7 +6,7 @@
 #include <iostream>
 #include <cmath>
 
-snakeController::snakeController(snakeBody &b, snakeViewer &v, snakeMenu &m,snakeScoreboard &s, snakeScoreboardViewer & scb) : snake(b), viewer(v), menu(m), scoreboard(s), scbViewer(scb) {
+snakeController::snakeController(snakeBody &b, snakeViewer &v, snakeMenu &m, snakeScoreboardViewer & scb) : snake(b), viewer(v), menu(m), scbViewer(scb) {
     timeToMove = 200;
 }
 
