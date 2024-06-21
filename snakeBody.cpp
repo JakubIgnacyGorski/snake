@@ -5,6 +5,8 @@
 #include "snakeBody.h"
 #include <iostream>
 #include <random>
+#include <chrono>
+
 snakeBody::snakeBody() {
     score = 0;
     snakeSpeed = {0, 0};
@@ -50,8 +52,7 @@ snakeBody::snakeBody(int width, int height, int snakeLength, GameState startupSt
 
 void snakeBody::placeFruit() {
     if (state != RUNNING) return;
-    std::random_device rd;
-    std::default_random_engine randomEngine(rd());
+    std::default_random_engine randomEngine(std::chrono::high_resolution_clock::now().time_since_epoch().count());
     std::uniform_int_distribution<int> x(0, boardWidth - 1);
     std::uniform_int_distribution<int> y(0, boardHeight - 1);
 

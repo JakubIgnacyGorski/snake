@@ -6,11 +6,12 @@
 #include <iostream>
 #include <string>
 #include <random>
+#include <chrono>
 #include "ColorsConsts.h"
 
 snakeViewer::snakeViewer(snakeBody &s, FontManager & f, TextureManager & t, const sf::RenderWindow & window) : snake(s), fontmgr(f), texmgr(t) {
-    windowWidth = window.getSize().x;
-    windowHeight = window.getSize().y;
+    windowWidth = static_cast<int>(window.getSize().x);
+    windowHeight = static_cast<int>(window.getSize().y);
     offsetY=windowHeight*0.1;
     newSnake();
 }
@@ -161,8 +162,7 @@ void snakeViewer::setupFruitView() {
 }
 
 void snakeViewer::randomFruitTexture() {
-    std::random_device rd;
-    std::default_random_engine randomEngine(rd());
+    std::default_random_engine randomEngine(std::chrono::high_resolution_clock::now().time_since_epoch().count());
     std::uniform_int_distribution<int> texture(0, fruitCount-1);
 
     fruitShape.setTexture(texmgr.getFruitTexture(texture(randomEngine)));
