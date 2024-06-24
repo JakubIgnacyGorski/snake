@@ -15,6 +15,7 @@ snakeScoreboard::snakeScoreboard(){
 
     if (!scoreboardFile.is_open()) {
         std::cerr << "Scoreboard file doesn't exist" << std::endl;
+        std::cerr << "Creating it..." << std::endl;
         return;
     }
 
